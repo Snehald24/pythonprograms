@@ -1,0 +1,4567 @@
+
+				“ हरे कृष्ण हरे कृष्ण कृष्ण कृष्ण हरे हरे , हरे राम हरे राम राम राम हरे हरे “
+
+
+Abstraction vs Encapsulation
+1) Encapsulation: Wrapping code and data together into a single unit. Class is an example of encapsulation, because it wraps the method and property. 
+   Abstraction is used to hide the internal functionality of the function from users. User is familiar with that "what function does" but they don't know 
+   "how it does." an abstraction is used to hide the irrelevant data/class in order to reduce the complexity. 
+
+
+Composition vs Aggregation
+Composition: Without existing container object if there is no chance of existing contained object then the container and contained objects are strongly 
+             associated and that strong association is nothing but Composition.
+Eg: University contains several Departments and without existing university object there is no chance of existing Department object. 
+    Hence University and Department objects are strongly associated and this strong association is nothing but Composition.
+
+Aggregation: Without existing container object if there is a chance of existing contained object then the container and contained objects are weakly 
+             associated and that weak association is nothing but Aggregation.
+Eg: Department contains several Professors. Without existing Department still there may be a chance of existing Professor. Hence Department and Professor 
+    objects are weakly associated, which is nothing but Aggregation.	
+
+
+Middleware
+1) Middleware is a framework of hooks into Django's request/response processing. It is a ligth, low level 'plugin' system for globally altering Django's 
+   input or output.
+   If we want to perform any activity at the time of pre processing of the request or post processing of the request then we should go for middleware.
+   Client > Request > Middleware > modifiedrequest > Server                                                  
+   Response > Middleware > modifiedresponse > Server                                                  
+2) Django contains several inbuilt middlewares which are configured inside settings.py All these middlewares will be executed before and after processing 
+   of every request. SecurityMiddleware, SessionMiddleware, CommonMiddleware, CsrfViewMiddleware, AuthenticationMiddleware, MessageMiddleware
+			     
+Why do we need to set up a virtual environment
+it can avoid compatibility issues between the different versions of the libraries
+Python requires a different version for different kind of applications. virtualenv is used to manage Python packages for different projects. 
+Using virtualenv allows you to avoid installing Python packages globally which could break system tools or other projects.
+conda create -n myenv python = 3.6  # to create new virtualenv 
+conda activate myenv  # To activate this environment
+conda env list  # to display list of virtualenv 
+
+"objects are Python's abstraction for data, and all data in a Python program is represented by objects or by relations between objects".Every value in Python
+is an object, including integers, floats, and Booleans. All Python objects have three things: a value, a type, and an identity.
+== (compares values) vs is (compares identities)
+
+Q. What is the difference between deepcopy/ shallow copy/ aliasing/ cloning ?
+import copy 
+lst2 = copy.copy(lst1)  # shallow copy creates a new object which stores the reference of the original elements.
+lst2 = copy.deepcopy(lst1) #deep copy creates a new object and recursively adds the copies of nested objects present in the original elements.
+new = old  # = operator meant for aliasing  It only creates a new variable that shares the reference of the original object.
+new = old[:]   # It is cloning/duplicate independent object, here memory address changing.
+new = old.copy()  # It is cloning/duplicate independent object, here memory address changing.
+1) shallow copies the reference of objects & Deep copy stores copies of the object’s value.
+2) Shallow Copy reflects changes made to the new/copied object in the original object & Deep copy doesn’t reflect changes made to the new/copied object in 
+   the original object.
+3) Shallow Copy stores the copy of the original object and points the references to the objects & Deep copy stores the copy of the original object and 
+   recursively copies the objects as well.
+4) Shallow copy is faster & Deep copy is comparatively slower.
+
+import copy
+lst1 = [[1,2,3,4],[5,6,7]]        # in nested list, shallow copy is not equal to deepcopy
+lst2 = copy.copy(lst1)		# shallow copy, both variable refering to same objects present inside list,1,2 3...are objects present inside list
+lst3 = copy.deepcopy(lst1)  # deepcopy, it is creating memory location
+print(id(lst1))  # 2289771469056
+print(id(lst2))  # 2289771468224
+print(id(lst3))  # 2289792101696
+lst1[1][0] = 100
+print(lst1)  # [[1, 2, 3, 4], [100, 6, 7]]
+print(lst2)  # [[1, 2, 3, 4], [100, 6, 7]]
+print(lst3)  # [[1, 2, 3, 4], [5, 6, 7]]
+lst1.append([100,200])  # here we are not changing objects present inside lst1
+print(lst1)  # [[1, 2, 3, 4], [5, 6, 7], [100, 200]]
+print(lst2)  # [[1, 2, 3, 4], [5, 6, 7]]
+print(lst3)  # [[1, 2, 3, 4], [5, 6, 7]]
+
+import copy
+lst1 = [1,2,3,4]  # in normal list, shallow copy == deepcopy
+lst2 = copy.copy(lst1)
+lst3 = copy.deepcopy(lst1)
+print(id(lst1)) # 2289789272576
+print(id(lst2)) # 2289792764160
+print(id(lst3)) # 2289789593536
+lst1[1] = 100
+print(lst1)  # [1, 100, 3, 4]
+print(lst2)  # [1, 2, 3, 4]
+print(lst3)  # [1, 2, 3, 4]
+
+Q. difference between mutable & Immutable
+All Python objects have three things: value, type, identity.
+1) Mutable objects can change their value but keep their id() & In immuttable if we try to change/add elements then new object will be created. 
+
+Q. What is the difference between list and tuples in Python?  ----  almost asked in all intervie 
+1) tuples are immutable if tuple contain only immutable objects and tuples are mutable if tuple contain one/more mutable objects & in list, list is alwase 
+   muttable in both condition. In immuttable if we try to change/add elements then new object will be created. 
+2) Tuples are faster than list because of static in nature. their size/space in memory is always constant and smaller than that of a list. 
+   When a list is created, the space in memory is over-allocated in order to appending new elements faster.
+3) Tuple consume less memory than list.
+4) Lists have several built-in methods. Tuple does not have many built-in methods.
+5) Lists are created using brackets [] while tuples are created using parentheses ().
+   Tuple can be hashed for e.g as a key for dictionaries.
+
+a = ([10,20],10,20)
+print(id(a)) #2575721562400
+a = a + (30,)  # tuples are immutable if tuple contain only immutable objects, if we try to change/add elements then new object will be created.
+print(a)  #([10, 20], 10, 20, 30)
+print(id(a)) # 2575721554712
+a[0][1] = 100  # tuples are mutable if tuple contain one/more mutable objects
+print(a)  #([10, 100], 10, 20, 30)
+print(id(a)) #2575721554712
+
+a = ('dogs', 'cats', [1, 2, 3])
+b = ('dogs', 'cats', [1, 2, 3])
+print(a == b)   # True  #tuples referred to by a and b have equal values (according to ==) but are different objects (according to is).
+print(a is b) # False
+print(id(a)) # 2228578812120
+print(id(b)) # 2228578812192
+
+a=([10,20],10,20)
+print(id(a)) # 2067045613856
+#a = a + (30,)  # tuples (that contain only immutable objects) are immutable
+a = a[1:3] + (100,200) + a[1:3]  #adding items in a specific index
+print(a)  # (10, 20, 100, 200, 10, 20)
+print(id(a)) # 1468703315912
+l = list(a)
+l.append(500)
+a = tuple(l)
+print(a) #(10, 20, 100, 200, 10, 20, 500)
+
+Q. What is decorator?
+1) The main objective of decorator functions is we can extend the functionality of existing functions without modifies that function.
+   Decorator is a function which take a function as argument and extend its functionality and returns modified function with extended functionality.
+   Decorator Chaining: We can define multiple decorators for the same function and all these decorators will form Decorator Chaining.
+
+from datetime import datetime
+import numpy as np
+def time_calculation(func):
+    before = datetime.now()
+    func()
+    after = datetime.now()
+    print('Total Time:', after-before)
+
+
+a = np.array([10,20,30])
+b = np.array([1,2,3])
+@time_calculation
+def dot_product1():
+    for x in range(10000000):
+        np.dot(a,b)
+# Total Time: 0:00:09.515677
+
+
+def func1(func):
+    func("this")
+func1(print) # this  we can put function inside function as argument
+
+def outer_function():
+    def inner_function():
+        print('I came from the inner function.')
+    inner_function()
+outer_function()  # I came from the inner function.
+inner_function()  # NameError: name 'inner_function' is not defined,  Since a function can be nested inside another function it can also be returned.
+
+Generator-Function
+1) Generator functions allow us to declare a function that behaves like an iterator, i.e. it can be used in a for loop. It is simple way of creating iterators. 
+   Generator is a function which is responsible to generate a sequence of values. it uses yield keyword to return values.
+   Every generator is an iterator. a generator is a function that returns an object (iterator) which we can iterate over (one value at a time).
+   generators easy to use than 6 level iterators it Improves memory utilization and performance.
+   Generators are suitable for reading data from large number of large files. Generators work great for web scraping and crawling.
+2) A generator-function is defined like a normal function, but whenever it needs to generate a value, it does so with the yield keyword rather than return. 
+   If the body of a def contains yield, the function automatically becomes a generator function.
+3) A more practical type of stream processing is handling large data files such as log files. Generators provide a space efficient method for such data 
+   processing as only parts of the file are handled at one given point in time. We can also use Iterators for these purposes, but Generator provides a 
+   quick way (We don’t need to write __next__ and __iter__ methods here).
+   
+def simpleGeneratorFun():
+    yield 1
+    yield 2
+for x in simpleGeneratorFun():  # Driver code to check above generator function
+    print(x, end=",")   # 1,2,
+obj = simpleGeneratorFun()     # Generator-Object: Generator functions return a generator object.
+print(obj.__next__())   # 1   # Generator objects are used either by calling the next method or using the generator object in a “for in” loop (as shown in the above program).
+print(obj.__next__())  # 2
+
+
+Q. What is pickling(serialization) and unpickling(de-serialization) ? 
+1) Pickle module accepts any Python object and converts it into a string representation and dumps it into a file by using dump function, this process is called pickling. 
+   While the process of retrieving original Python objects from the stored string representation is called unpickling.
+   Pickling :  python object > string > dump into file or Python object > byte stream
+   Pickling: It is a process where a Python object hierarchy is converted into a byte stream. 
+   Unpickling: It is the inverse of Pickling process where a byte stream is converted into an object hierarchy. 
+dumps() – This function is called to serialize an object hierarchy.
+loads() – This function is called to de-serialize a data stream.
+
+
+Q. What is List Comprehensions?
+LC is easy way of creating list objects from any iterable objects(like list, tuple, dictionary, range etc) based on some condition.
+It improvise the performance that is business requirement.
+
+Q. difference bw iterator and generator?  -------- intervie Q
+1) In simple words iterator is one which iterates entirely or till the condition is met, but generator is something that you will call to generate a value 
+   when you want, always look for the keyword yield.
+2) In creating a python generator, we use a function. But in creating an iterator in python, we use the iter() and next() functions.
+   A generator is built by calling a function that has one or more yield expressions
+3) A generator in python makes use of the ‘yield’ keyword & Iterator uses iter() and next() functions.
+4) You can implement your own iterator using a python class; a generator does not need a class in python.
+5) To write a python generator, you can either use a Python function or a comprehension. But for an iterator, you must use the iter() and next() functions.
+6) Generator write fast and compact code. This is an advantage over Python iterators. They are also simpler to code than do custom iterator.
+7) Python iterator is more memory-efficient.
+8) every generator is an iterator but not every python iterator is a generator.
+9) In Iterator, Class is used to implement an iterator but in generator, Function is used to implement a generator.
+10) Iterators are used mostly to iterate or convert other objects to an iterator using iter() function & Generators are mostly used in loops to generate an 
+   iterator by returning all the values in the loop without affecting the iteration of the loop
+
+Relationship Between Python Generators and Iterators
+1) A python generator is an iterator: Generator in python is a subclass of Iterator. To prove this, we use the issubclass() function.
+2) Python iterator is an iterable: Iterator in python is a subclass of Iterable.
+def func():
+       i=1
+       while i>0:
+            yield i
+            i-=1
+for i in func():
+        print(i)  #1
+print(func().__sizeof__()) #64 Here, we got 64. But for a python iterator, we get 32.
+print(iter([1,2]).__sizeof__()) #32
+
+f=func()
+print(type(f))  #<class 'generator'>
+i=iter({1,3,2})
+print(type(i)) #<class 'set_iterator'>
+
+def squares(start, stop):
+    for i in range(start, stop):
+        yield i * i
+generator = squares(a, b)
+generator = (i*i for i in range(a, b))  #or the equivalent generator expression (genexp)
+
+Itertor
+An iterator is an object which contains a countable number of values and it is used to iterate over iterable objects like list, tuples, sets, etc.
+iter() keyword is used to create an iterator containing an iterable object.
+next() keyword is used to call the next element in the iterable object.
+l = [10,20,30,4]
+print(next(l)) #TypeError: 'list' object is not an iterator
+iter_list = iter([10,20,30,4])
+print(next(iter_list)) # 10
+print(next(iter_list)) # 20
+print(next(iter_list)) # 30
+
+import csv
+release_year_list = []
+f = open('netflix_titles.csv','r',encoding='utf-8')
+r = csv.reader(f) #returns csvreader object
+header = next(r) #read header(column names) and ignore
+for row in r:
+    release_year_list.append(int(row[7]))
+#unique_values = np.unique(release_year_list)
+
+select max(esal) from employee where esal<(select max(esal) from employee); -- 2nd highest salary
+select min(esal) from employee where esal>(select min(esal) from employee); -- 2nd lowest salary
+select edept,max(esal) from employee group by edept; -- deptwise highest salary
+select edept,count(edept) from employee group by edept having count(edept)>1; -- deptwise duplicate salary
+
+pip install python==3.6.9 -- Which Python version you are using
+
+Q. Where you used list,tuple,set,dict?
+x = df.drop(['sepal_width', 'petal_width'], axis = 1)
+x = df.drop(columns=['sepal_width', 'petal_width'])
+y = df['species']
+
+Q.  What are Python namespaces? Why are they used?
+A namespace is a system that has a unique name for each and every object in Python to avoid naming conflicts.. An object might be a variable or a method. 
+Python itself maintains a namespace in the form of a Python dictionary. 
+Types of namespaces: built-in namespace, global namespace, local namespace.
+var1 = 5   # var1 is in the global namespace
+def some_func():
+	var2 = 6  # var2 is in the local namespace
+	def some_inner_func():
+		var3 = 7   ## var3 is in the nested local namespace
+In python we deal with variables, functions, libraries and modules etc. There is a chance the name of the variable you are going to use is already existing 
+as name of another variable or as the name of another function or another method. In such scenario, we need to learn about how all these names are managed 
+by a python program. This is the concept of namespace.
+
+
+Q. What is class?
+In Python every thing is an object. To create objects we required some Model/Plan/Blueprint, which is nothing but class.
+We can write a class to represent properties (attributes) and actions (behaviour) of object.
+Properties can be represented by variables & Actions can be represented by Methods.
+Hence class contains both variables and methods. A class is a code template for creating objects.
+Physical existence of a class is nothing but object. We can create any number of objects for a class.
+
+Q. What is lambda function? 
+1) lambda function is used for creating small, one-time, anonymous function objects in Python. 
+2) Lambda is an inline function where we can do any functionality without a function name.      
+3) It is helpful when we use it as an argument to a higher-order function.filter(),map() and reduce().
+4) By using Lambda Functions we can write very concise code so that readability of the program will be improved. 
+   obj = lambda argument_list : expression
+5) Lambda Function internally returns expression value and we are not required to write return statement explicitly.
+
+
+Q. Why and where use lambda and map function. And difference b/w them.
+lambda function is used for creating small, one-time, anonymous function objects in Python. 
+Lambda is an inline function where we can do any functionality without a function name.      
+It is helpful when we use it as an argument to a higher-order function.
+map() takes one function as its argument and use that function on each element of the iterable.
+
+Q. what is the difference for python between lambda and regular function?
+Lambda is an inline function where we can do any functionality without a function name.
+lambda function is used for creating small, one-time, anonymous function objects in Python. 
+It is helpful when we use it as an argument to a higher-order function. lambda argument_list : expression
+
+Q. Difference between Map() and Filter() in Python ?
+map(): The basic function of map() is to manipulate iterables. Map executes all the conditions of a function on the items in the iterable. 
+Filter(): As the name suggests, it is used to filter the iterables as per the conditions.
+         Filter filters the original iterable and passes the items that returns True for the function provided to filter. 
+
+Q. Self variable   ---- interview Q
+1) self is the default variable which is always pointing to current object. (like this keyword in Java)
+2) By using self we can access instance variables and instance methods of object.
+self should be first parameter inside constructor def __init __ (self): & inside instance methods def talk(self):
+
+Q. HTTP Methods
+1) GET/ read/retrive: The GET method is used to retrieve information from the given server using a given URL. 
+                      Requests using GET should only retrieve data and should have no other effect on the data.
+2) POST/ create: A POST request is used to send data to the server. for ex. customer information, file upload using HTML forms. 
+3. PUT/update: Replaces all current representations of the target resource with the uploaded content.
+4. DELETE/remove: Removes all current representations of the target resource given by a URL.
+
+Q. What is diff bw GET and POST Method?
+main diff is about payload. POST is more secure than GET.
+
+Q. What is monkey patching in python?
+Monkey-patching is for modifying a class or module at a run time. 
+When we work on a large project, we may encounter a situation where the third-party library is not working well. So we attempt to revise (or change) it from our project. 
+This process is known as monkey patching in Python. Generally, it is avoided by the developer. However, it is a part of the development process.
+In monkey patching, we can reopen the class and modify its behavior
+We know that Python is a dynamic language; classes are mutable, so we can alter them when we want.
+
+Q. What is ternary operator?
+It is simple way to write conditional statements in a single line.
+The ternary operator is one-line version of the if-else statement. It replace the multi-line if-else syntax.
+Syntax: x = firstValue if condition else secondValue. If condition is True then firstValue will be considered else secondValue will be considered.
+
+Q. What are global and Local variable ? 
+The variables which are declared outside of function are called global variables. These variables can be accessed in all functions of that module.
+The variables which are declared inside a function are called local variables. Local variables are available only for the function in which we declared it.
+i.e from outside of function we cannot access.
+
+Q. How we know key status in dictionary?
+if key in d: 
+   print(d[key])
+d={}
+d['one']=1
+d['two']=2
+print(d) #{'one': 1, 'two': 2}
+print(d['one']) # 1
+#print(d['three']) #KeyError: 'three'
+print(d.get('one'))  # 1
+print(d.get('three')) # None
+print(d.get('three','key not available'))  # key not available
+
+Q. How to download 10 GB data from database using python / without python?  --- intervew Q
+1) by using chuncks
+2) by using  scp (secure copy) 
+scp (secure copy) command in Linux system used to copy file(s) between servers in a secure way. secure copy allows secure transferring of files in between 
+the local host and the remote host or between two remote hosts.
+it is using Secure Shell (SSH) protocol. 
+Basic syntax of SCP scp source_file_name username@destination_host:destination_folder
+
+Q. What is PIP ?
+PIP is a package management system used to install and manage software packages written in Python. It stands for “preferred installer program” 
+List,Tuple and Set to represent a group of values as a single entity. dictionary represent a group of values as key-value pairs 
+
+Q. Difference between Positional vs keyword arguments ?
+positional argument means function expects an argument at a specific position. 
+def func(x,y,z) If we need to pass 1 for x, 2 for y and 3 for z then we have to call the function respecting the order like func(1,2,3). 
+keyword argument means we provide an argument name and value together when calling the function therefore the order is irrelevant. 
+we can call the function as func(z=3, x=1, y=2) and everything should work as expected. 
+def f1(x,y,z):
+    print(f"x:{x},y:{y},z:{z}")
+f1(10,20,30)  # x:10,y:20,z:30
+def f1(x,y,z):
+    print(f"x:{x},y:{y},z:{z}")
+f1(z=30,y=20,x=10)  # x:10,y:20,z:30
+
+Q. Variables vs. Objects in Memory ?
+Lists and tuples are Python objects that are stored in memory.
+a and b are variables. Variables are pointers to objects. That means that, in memory, a and b simply hold the address at which the objects are located.
+
+# Available List Operations-more in-built functions than tuple
+a.append(x)
+a.clear(iterable)
+a.copy()
+a.count(x)
+a.extend()
+a.index(x[, start[, end]])
+a.insert(i,x)
+a.pop([i])
+a.remove(x)
+a.reverse()
+a.sort()
+
+# Available Tuple Operations, less in-built functions
+b.count(x)
+b.index(x[, start[, end]])
+
+Q. What is string interning?
+a = "Simple"  print(id(a)) #140412010628656
+b = "Simple"  print(id(b)) #140412010628656
+As a way to save memory space, Python may combine two different immutable objects into one and simply assign both pointers the same memory address. 
+This is okay because we know that those objects will never change. This is known as string interning.
+
+Q. How is Python an interpreted language? 
+interpretation: source code > machine code/byte code. interpreter executes the statements of code “one-by-one”. The interpreter is used mostly for scripting languages
+                like python etc, which directly executes source code > byte code.This byte code is platform independent means code is portable.
+compilation: source code > object code > machine code. compiler executes the code entirely and lists all possible errors at a time.
+
+1) it's output is generated directly without any compilation. means that it's every code is executed. But in interpreted language, every single line is 
+   converted to machine code directly.
+2) means the source code of a Python program is converted into bytecode that is then executed by the Python virtual machine.
+3) An interpreter executes the statements of code “one-by-one” whereas the compiler executes the code entirely and lists all possible errors at a time.
+   That’s why python shows only one error message even in code has multiple errors. that help us to clear errors easily and increase the execution speed.
+
+Q.What is PEP8? (Python Enhancement Proposal.)
+It is Style Guide for Python Code, document that provides various guidelines to write the readable in Python, describes how the developer can write beautiful
+code. PEP 8 is a coding convention, a set of recommendation, about how to write your Python code more readable.
+
+Q. How is memory managed in Python?
+In python is memory managed by Python private heap space. All Python objects and data structures are located in a private heap. 
+The programmer does not have access to this private heap. The python interpreter takes care of this instead.
+
+Q. What are python modules?
+Python modules are files containing Python code. A Python module is a .py file containing executable code.
+Some of the commonly used built-in modules are: OS, sys, math, random, datatime, JSON,
+
+Q.What is type conversion in Python? 
+int() – converts any data type into integer type
+float() – converts any data type into float type
+ord() – converts characters into integer
+hex() – converts integers to hexadecimal
+oct() – converts integer to octal
+tuple() – This function is used to convert to a tuple.
+set() – This function returns the type after converting to set.
+list() – This function is used to convert any data type to a list type.
+dict() – This function is used to convert a tuple of order (key,value) into a dictionary.
+str() – Used to convert integer into a string.
+complex(real, imag) – This function converts real numbers to complex(real, imag) number.
+
+Q. What are functions in Python? 
+A function is a block of code which is executed only when it is called. To define a Python function, the def keyword is used.
+advatange is code reusability.
+
+Q. How does break, continue and pass work?
+Break: Allows loop termination when some condition is met and the control is transferred to the next statement.
+Continue: Allows skipping some part of a loop when some condition is met and the control is transferred to the beginning of the loop
+Pass: This is basically a null operation. Used when you need some block of code syntactically, but you want to skip its execution.  Nothing happens when 
+      this is executed.
+
+Q. How can you randomize the items of a list in place in Python?
+from random import shuffle
+a=['parshu',1,2,'python','A','G','Z','X','Y']
+shuffle(a)
+print(a) #[2, 1, 'Y', 'G', 'A', 'python', 'X', 'parshu', 'Z']
+
+Q. What is the difference between range & xrange? 
+1) Both generate a list of integers only difference is that range returns a Python list object and xrange returns an xrange object.
+2) In Python 3, there is no xrange. only range() is available.
+
+Q. What is the difference between Python Arrays and lists? 
+similarities: both used to store data, both are mutable, insertion order is preserved in both. Hence indexing and slicing concept is applicable.
+Differences 
+1. list is python's inbuilt type. we have to install and import numpy explicitly.
+2. List is index collection of heterogeneous elements. But array is index collection of homogeneous elements.
+3. On list, we cannot perform vector operations. But on ndarray we can perform vector operations.
+4. Arrays consume less memory than list.
+5. Arrays are superfast when compared with list.
+6. Numpy arrays are more convenient to use while performing complex mathematical operation.
+
+Q. How will you capitalize the first letter of string?
+capitalize() method capitalizes the first letter of a string. 
+s='Parshuram Shivsing Patil'
+print(s.upper())  # PARSHURAM SHIVSING PATIL
+print(s.lower())  # parshuram shivsing patil
+print(s.swapcase()) # pARSHURAM sHIVSING pATIL
+print(s.title())  # Parshuram Shivsing Patil
+print(s.capitalize())  # Parshuram shivsing patil
+print(s.casefold())  # parshuram shivsing patil
+print(s.encode())  # b'Parshuram Shivsing Patil'
+
+Q. 14 Data types in Python ?
+int float complex bool str bytes bytearray(mutable), range,list(mutable),tupple,set(mutable),frozenset,dict(mutable),None.
+
+Q.What are docstrings in Python?
+Documentation string represents description of the class. it is optional. 
+print(classname.__doc__)
+help(classname)
+
+Q. What is a dictionary in Python?
+It defines one-to-one relationship between keys and values. Dictionaries contain pair of keys and their corresponding values. 
+Dictionaries are indexed by keys.
+
+Q.How can files be deleted in Python?   os.remove() function
+
+Q. How to add values to a python array?
+Elements added to an array using the append(), extend() and the insert (i,x) functions.
+
+Q. How to remove values to a python array? 
+Array elements can be removed using pop() or remove() method. 
+pop returns the deleted value and remove() does not.
+
+Q. What is split used for?
+The split() method is used to separate a string & convert into list.
+print("parshuram shivsing patil".split())	#['parshuram', 'shivsing', 'patil']
+print("parshurampatil197@gmail.com".split('@')) #['parshurampatil197', 'gmail.com']
+print("parshuram@patil197@gmail.com".split('@')) # ['parshuram', 'patil197', 'gmail.com']
+
+Q. What are the tools that help to find bugs or perform static analysis?
+PyChecker is a static analysis tool that detects the bugs in Python source code and warns about the style and complexity of the bug. Pylint is another tool 
+that verifies whether the module meets the coding standard.
+
+
+=============================================Advance==========================================================================================
+
+Instance vs. Static vs. Class Methods
+instance method is most common type of methods in Python classes, there's no decorator needed.
+Any method you create will automatically be created as an instance method, unless you tell Python otherwise.
+
+
+Python's Object Oriented Programming System(OOPs)
+
+Q. What is Class ?
+1) In Python every thing is an object. To create objects we required some Model/Plan/Blueprint, which is nothing but class.
+2) We can write a class to represent properties (attributes) and actions (behavior) of object.Properties can be represented by variables & Actions can be represented by Methods.
+   Ex.Ndarray is a class in numpy module & array is object of it. We can define a class by using class keyword.
+3) An instance/physical representation of a class is nothing but object. We can create any number of objects for a class.
+class className:
+''' documentation string '''
+variables: instance variables, static and local variables 
+methods: instance methods, static methods, class methods
+
+Documentation string represents description of the class. Within the class doc string is always optional. We can get doc string by using the following 2 ways.
+print(classname.__doc__)
+print(ndarray.__doc__)
+help(classname)
+
+Self variable
+self is the default variable which is always pointing to current object (like this keyword in Java) 
+By using self we can access instance variables and instance methods of object.
+self should be first parameter inside constructor def __init__(self):
+self should be first parameter inside instance methods def talk(self):
+
+Reference Variable
+The variable which can be used to refer object is called reference variable. By using reference variable, we can access properties and methods of object.
+
+Constructor Concept
+Constructor is a special method in python.
+The name of the constructor should be __init__ (self)
+Constructor will be executed automatically at the time of object creation.
+The main purpose of constructor is to declare and initialize instance variables.
+Per object constructor will be exeucted only once.
+Constructor can take atleast one argument(atleast self)
+Constructor is optional and if we are not providing any constructor then python will provide default constructor.
+class test:
+    def __init__(self):
+        print("constructor execution")
+    def m1(self):
+        print("method execution")
+t1=test() #constructor execution
+t2=test() #constructor execution
+t3=test() #constructor execution
+t3.m1()   #method execution
+
+Difference bw  Method & Constructor
+Method 							Constructor
+1) Name of method can be any name			1) Constructor name should be always __init __.
+2. Method will be executed if we call that Method.	2) Constructor will be executed automatically at the time of object creation.
+3) Per object, method can be called any number of times.3) Per object, Constructor will be executed only once.
+4) Inside method we can write business logic		4) Inside Constructor we have to declare and initialize instance variables
+
+Q. Write a Python program to create a Student class and Creates an object to it. Call the method talk() to display student details.
+class student:
+     '''Documentation string represents description of the class'''
+     def __init__(self):
+        self.name="parshuram"
+        self.age=27
+        self.marks=80
+    def show(self):
+        print(f"My name is {self.name}, age is {self.age} and Marks is {self.marks}")
+t1=student()  # t1 is object reference variable
+t1.show()  # My name is parshuram, age is 27 and Marks is 80
+print(t1.__dict__) #{'name': 'parshuram', 'age': 27, 'marks': 80}
+print(student.__doc__) #Documentation string represents description of the class
+print(t1.__doc__) #Documentation string represents description of the class
+
+Within the Python class we can represent data by using variables. There are 3 types of variables are allowed.
+1.Instance Variables (Object Level Variables)
+2.Static Variables (Class Level Variables)
+3.Local variables (Method Level Variables)
+
+Within the Python class, we can represent operations by using methods. The following are various types of allowed methods
+1.Instance Methods
+2.Class Methods
+3.Static Methods
+
+Instance Variables (Object Level Variables)
+1) value of a variable is varied from object to object. For every object a separate copy of instance variables will be created.
+2) we can declare Instance variables Inside Constructor & Inside Instance Method by using self variable, Outside of the class by using object reference variable.
+   We can access instance variables with in the class by using self variable and outside of the class by using object reference.
+   Within a class we can delete instance variable as follows del self.variableName & outside of class as del objectreference.variableName
+class test:
+    def __init__(self):
+        self.a=10
+        self.b=20
+    def m1(self):
+        self.c=30
+t1 = test() # object reference variable
+t2 = test()
+print(t1.__dict__)	# {'a': 10, 'b': 20}
+t1.m1()
+print(t1.__dict__)	# {'a': 10, 'b': 20, 'c': 30}
+t1.d=40
+print(t1.__dict__)	# {'a': 10, 'b': 20, 'c': 30, 'd': 40}
+print(t1.a,t1.b,t1.c,t1.d)	# 10 20 30 40
+del t1.b
+print(t1.__dict__)	# {'a': 10, 'c': 30, 'd': 40}
+print(t2.__dict__)  # {'a': 10, 'b': 20} The instance variables which are deleted from one object, will not be deleted from other objects.
+t1.a=888    # If we change the values of instance variables of one object then those changes won't be reflected to the remaining objects, because for every object weare separate copy of instance variables are available.
+print(t1.__dict__)	# {'a': 888, 'c': 30, 'd': 40}
+print(t2.__dict__)  # {'a': 10, 'b': 20}
+
+Static variables (Class Level Variables)
+1) If the value of a variable is not varied from object to object, such type of variables we have to declare with in the class directly but outside of methods. Such type of variables are called Static variables.
+   For total class only one copy of static variable will be created and shared by all objects of that class.
+   We can access static variables either by class name or by object reference. But recommended to use class name.
+2) Instance Variable vs Static Variable: In the case of instance variables for every object a separate copy will be created, but in the case of static variables
+                                      for total class only one copy will be created and shared by every object of that class.
+3) In general we can declare within the class directly but from out side of any method.
+   Inside constructor by using class name.
+   Inside instance method by using class name.
+   Inside classmethod by using either class name or cls variable.
+   Inside static method by using class name.
+4) How to access static variables
+   inside constructor: by using either self or classname
+   inside instance method: by using either self or classname
+   inside class method: by using either cls variable or classname
+   inside static method: by using classname
+   From outside of class: by using either object reference or classnmae
+5) Anywhere either with in the class or outside of class we can modify by using classname. But inside class method, by using cls variable.
+   If we change the value of static variable by using either self or object reference variable, then the value of static variable won't be changed, 
+   just a new instance variable with that name will be added to that particular object.
+6) We can delete static variables from anywhere by using the following syntax del classname.variablename But inside classmethod we can also use cls 
+    variable del cls.variablename
+7) By using object reference variable/self we can read static variables, but we cannot modify or delete.
+   If we are trying to modify, then a new instance variable will be added to that particular object. t1.a = 70
+   If we are trying to delete then we will get error.
+   We can modify or delete static variables only by using classname or cls variable.
+
+class test:
+    x=10
+    def __init__(self):
+      self.y=20
+t1=test()
+t2=test()
+print(t1.__dict__) #{'y': 20}
+print("t1:",t1.x,t1.y)	#t1: 10 20
+t1.x=888
+t1.y=777
+print("t1:",t1.x,t1.y) #t1: 888 777
+print("t2:",t2.x,t2.y) #t2: 10 20
+test.x=888
+print("t1:",t1.x,t1.y) #t1: 888 777
+print("t2:",t2.x,t2.y) #t2: 888 20
+
+class test:
+    a=10
+    def __init__(self):
+      test.b=20
+    
+    def m1(self):
+        test.c=30
+    
+    @classmethod
+    def m2(cls):
+        test.d=40
+        cls.e=50
+    
+    @staticmethod
+    def m3():
+        test.f=60
+print(test.a) #10
+t1=test()
+print(t1.a,t1.b) #10 20
+t1.m1()
+print(t1.a,t1.b,t1.c)#10 20 30
+test.m2()
+print(t1.a,t1.b,t1.c,t1.d,t1.e) #10 20 30 40 50
+test.m3()
+print(t1.a,t1.b,t1.c,t1.d,t1.e,t1.f) #10 20 30 40 50 60
+test.g=70
+print(t1.a,t1.b,t1.c,t1.d,t1.e,t1.f,t1.g) #10 20 30 40 50 60 70
+
+class test:
+    a=10
+    def __init__(self):
+        print(test.a,self.a)
+    def m1(self):
+        print(test.a,self.a)
+    @classmethod
+    def m2(cls):
+        print(cls.a,test.a)
+    @staticmethod
+    def m3():
+        print(test.a)
+
+t1=test() #10 10
+t1.m1() #10 10
+t1.m2() #10 10
+t1.m3() #10
+
+class test:
+    a=10
+    @classmethod
+    def m2(cls):
+        cls.a=888
+    @staticmethod
+    def m3():
+        test.a=777
+print(test.a)	#10
+test.m2()
+print(test.a)	#888
+test.m3()
+print(test.a)	#777
+
+class test:
+    a=10
+    def m1(self):
+        self.a=888
+t1=test()
+print(t1.a)    #10
+t1.m1()
+print(t1.a)    #888
+print(test.a)  #10
+
+class test:
+    a=10
+    def __init__(self):
+        self.b=20
+    def m1(self):
+        self.a=888
+        self.b=777
+t1=test()
+t2=test()
+print(t1.a,t1.b)   #10 20
+t1.m1()
+print(t1.a,t1.b)   # 888 777
+print(t2.a,t2.b)   # 10 20
+
+class test:
+    a=10
+    def __init__(self):
+        self.b=20
+    @classmethod
+    def m1(cls):
+        cls.a=888
+        cls.b=777
+t1=test()
+t2=test()
+print(t1.a,t1.b)   #10 20
+t1.m1()
+print(t1.a,t1.b)   # 888 20
+print(t2.a,t2.b)   # 888 20
+print(test.a,test.b)   # 888 777
+
+class test:
+    a=10
+    @classmethod
+    def m1(cls):
+      del cls.a
+test.m1()
+print(test.a)	# AttributeError: type object 'test' has no attribute 'a'
+
+class test:
+    a=10
+    def __init__(self):
+        test.b=20
+        del test.a
+    def m1(self):
+        test.c=30
+        del test.b
+    @classmethod
+    def m2(cls):
+        cls.d=40
+        del cls.c
+    @staticmethod
+    def m3():
+        test.e=50
+        del test.d
+
+Local variables
+Sometimes to meet temporary requirements of programmer, we can declare variables inside a method directly, such type of variables are called local variable 
+or temporary variables.
+Local variables will be created at the time of method execution and destroyed once method completes.
+Local variables of a method cannot be accessed from outside of method.
+class test:
+    def m1(self):
+        a=100
+        print(a)
+t1=test()
+t1.m1()	#100
+
+Types of Methods: Instance Methods, Class Methods, Static Methods
+
+Instance Methods
+Inside method implementation if we are using instance variables then such type of methods are called instance methods.
+Inside instance method declaration, we have to pass self variable.
+By using self variable inside method we can able to access instance variables.
+Within the class we can call instance method by using self variable and from outside of the class we can call by using object reference.
+class student:
+    def __init__(self,name,marks):
+        self.name=name
+        self.marks=marks
+    def display(self):
+        print(f"student name is {self.name} and Marks is {self.marks}")
+    def Grade(self):
+        if self.marks>=85:
+            print(f"{self.name} passed with A Grade")
+        elif self.marks>=65:
+            print(f"{self.name} passed with B Grade")
+        elif self.marks>=35:
+            print(f"{self.name} is Passed")
+        else:
+            print(f"{self.name} is Failed")
+for i in range(2):
+    name=input("Enter student name:")
+    marks=int(input("Enter student marks:"))
+    s=student(name,marks)
+    s.display()
+    s.Grade()
+    
+Setter and Getter Methods: We can set and get the values of instance variables by using getter and setter methods.
+
+Class Methods
+Inside method implementation if we are using only class variables (static variables), then such type of methods we should declare as class method.
+We can declare class method explicitly by using @classmethod decorator. 
+For class method we should provide cls variable at the time of declaration.
+We can call classmethod by using classname or object reference variable.
+class animal:
+    legs = 4
+    @classmethod
+    def walk(cls,name):
+        cls.name=name
+        print("{} walks with {} legs".format(name,cls.legs))
+animal().walk('cat')	# cat walks with 4 legs
+
+Q. Program to track the number of objects created for a class?
+class test:
+    count=0
+    def __init__(self):
+        test.count=test.count+1
+    @classmethod
+    def display(cls):
+        print('The number of objects created for test class:',cls.count)
+t1=test()
+t2=test()
+test.display()	# The number of objects created for test class: 2
+t3=test()
+t4=test()
+test.display()	# The number of objects created for test class: 4
+
+Static Methods/general utility method/
+Inside these methods we won't use any instance or class variables. 
+Here we won't provide self or cls arguments at the time of declaration.
+We can declare static method explicitly by using @staticmethod decorator 
+We can access static methods by using classname or object reference
+
+class maths:
+    @staticmethod
+    def avg(x,y):
+        print("SUM IS:",x+y)
+        print("Average is:",(x+y)/2)
+t1=maths()
+t1.avg(10,20) #SUM IS: 30      Average is: 15.0
+
+In general we can use only instance and static methods. 
+Inside static method we can access class level variables by using class name.
+class methods are most rarely used methods in python.
+
+Inner classes
+Sometimes we can declare a class inside another class,such type of classes are called inner classes.
+Without existing one type of object if there is no chance of existing another type of object,then we should go for inner classes.
+The following are various possible syntaxes for calling inner class method 
+o=Outer() i=o.Inner()   i.m1()
+i=Outer().Inner()    i.m1()
+Outer().Inner().m1()
+
+class outer:
+    def __init__(self):
+        print("outer class execution")
+    class inner:
+        def __init__(self):
+            print("inner class execution")
+        def m1(self):
+            print("inner method execution")
+o=outer()	# outer class execution
+i=o.inner()	# inner class execution
+i.m1()		# inner method execution
+
+class person:
+    def __init__(self):
+        self.name="parshuram"
+        self.db=self.dob()
+    def display(self):
+        print("Name:",self.name)
+    class dob:
+        def __init__(self):
+            self.dd=28
+            self.mm=3
+            self.yy=1994
+        def display(self):
+            print("DOB={}/{}/{}".format(self.dd,self.mm,self.yy))
+p=person()
+p.display()	#Name: parshuram
+i=p.db
+i.display()	#DOB=28/3/1994
+
+Inside a class we can declare any number of inner classes.
+class human:
+    def __init__(self):
+        self.name="parshuram"
+        self.head=self.Head()
+        self.brain=self.Brain()
+    def display(self):
+        print("Hello ",self.name)
+    class Head:
+        def talk(self):
+            print("talking....")
+    class Brain:
+        def think(self):
+            print("Thinking...")
+h=human()
+h.display()	# Hello  parshuram
+h.head.talk()	# talking....
+h.brain.think()	# Thinking...
+h.Head().talk()	# talking....
+
+
+=======================================================================================
+
+
+Polymorphism 
+Poly means many. Morphs means forms. Polymorphism means 'Many Forms'.
++ operator acts as string concatenation and arithmetic addition.
+* operator acts as multiplication and repetition operator.
+
+The Same method with different implementations in Parent class and child classes.(overriding)
+1.Duck Typing Philosophy of Python
+2.Overloading(Operator Overloading, Method Overloading, Constructor Overloading)
+3.Overriding (Method overriding, constructor overriding)
+
+Duck Typing Philosophy of Python
+In Python we cannot specify the type explicitly. Based on provided value at runtime the type will be considered automatically. Hence Python is considered 
+as Dynamically Typed Programming Language.
+def f1(obj): 
+obj.talk()
+What is the type of obj? We cannot decide at the beginning. At runtime we can pass any type.Then how we can decide the type?
+At runtime if 'it walks like a duck and talks like a duck,it must be duck'. Python follows this principle. This is called Duck Typing Philosophy of Python.
+The problem in this approach is if obj does not contain talk() method then we will get AttributeError
+But we can solve this problem by using hasattr() function. hasattr(obj,'attributename')
+attributename can be method name or variable name
+
+class Duck:
+    def talk(self):
+        print('Quack.. Quack..')
+class Dog:
+    def talk(self):
+        print('Bow Bow..')
+class Cat:
+    def talk(self):
+        print('Moew Moew ..')
+class Goat:
+    def talk(self):
+        print('Myaah Myaah ..')
+def f1(obj):
+    obj.talk()
+
+l=[Duck(),Cat(),Dog(),Goat()]
+for obj in l:
+    f1(obj)
+
+Quack.. Quack..
+Moew Moew ..
+Bow Bow..
+Myaah Myaah ..
+
+Overloading
+We can use same operator or methods for different purposes.
++ operator can be used for Arithmetic addition and String concatenation.
+* operator can be used for multiplication and string repetition purposes.
+There are 3 types of overloading
+1) Operator Overloading
+2) Method Overloading
+3) Constructor Overloading
+
+Operator Overloading
+We can use the same operator for multiple purposes, which is nothing but operator overloading. 
+Python supports operator overloading.
++ operator can be used for Arithmetic addition and String concatenation.
+* operator can be used for multiplication and string repetition purposes.
+class book:
+    def __init__(self,pages):
+        self.pages = pages
+b1 = book(100)
+b2 = book(200)
+print(b1+b2)  #TypeErr:unsupported operand type(s) for +: 'book' and 'book'
+
+Magic Method
+We can overload + operator to work with Book objects also. i.e Python supports Operator Overloading.
+For every operator Magic Methods are available. To overload any operator we have to override that Method in our class.
+Internally + operator is implemented by using __add ()__ method. This method is called magic method for + operator. 
+We have to override this method in our class.
+
+class book:
+    def __init__(self,pages):
+        self.pages = pages
+    def __add__(self, other):
+        return self.pages + other.pages
+b1=book(100)
+b2=book(200)
+print(b1+b2)	#300
+
+The following is the list of operators and corresponding magic methods.
++	---> object.__add__ (self,other)
+-	---> object.__sub__ (self,other)
+*	---> object.__mul__ (self,other)
+/	---> object.__div__ (self,other)
+//	---> object. __floordiv__ (self,other)
+%	---> object.__mod__(self,other)
+**	---> object.__pow__(self,other)
++=  	---> object.__iadd__(self,other)
+-=	---> object.__isub__(self,other)
+*= 	---> object.__imul__(self,other)
+/= 	---> object.__idiv__(self,other)
+//= 	---> object.__ifloordiv__(self,other)
+%=   	---> object.__imod__(self,other)
+**=   	---> object.__ipow__(self,other)
+<	---> object.__lt__(self,other)
+<= 	---> object.__le__(self,other)
+>	---> object.__gt__(self,other)
+>= 	---> object.__ge__(self,other)
+==   	---> object.__eq__(self,other)
+!=   	---> object.__ne__(self,other)
+
+Q. Overloading > and <= operators for Student class objects?
+class student:
+    def __init__(self,name,marks):
+        self.name=name
+        self.marks=marks
+    def __gt__(self, other):
+        return self.marks>other.marks
+    def __le__(self, other):
+        return self.marks<=self.marks
+s1=student("parshuram",100)
+s2=student("amol",200)
+print(s1>s2)	#False
+print(s1<s2)	#True
+print(s1>=s2)	#True	
+print(s1<=s2)	#True
+
+Q. Program to overload multiplication operator to work on Employee objects?
+class employee:
+    def __init__(self,ename,esal):
+        self.ename=ename
+        self.esal=esal
+    def __mul__(self, other):
+        return self.esal*other.days
+class timesheet:
+    def __init__(self,ename,days):
+        self.ename=ename
+        self.days=days
+e=employee("parshuram",2500)
+t=timesheet("parshuram",30)
+print("monthly salary:",e*t)	# monthly salary: 75000
+
+Method Overloading (compile time polymorphism )
+If 2 methods having same name but different type of arguments then those methods are said to be overloaded methods.
+in Python Method overloading is not possible.
+If we are trying to declare multiple methods with same name and different number of arguments then Python will always consider only last method.
+if method with variable number of arguments required then we can handle with default arguments or with variable number of argument methods.
+class test:
+    def m1(self):
+        print("no-arg method")
+    def m1(self,a):
+        print("one-arg method")
+    def m1(self,a,b):
+        print("two arg method")
+t1 = test()
+t1.m1()	# m1() missing 2 required positional arguments: 'a' and 'b'
+t1.m1(10,20)  # two arg method
+
+Q. How we can handle overloaded method requirements in Python?
+if method with variable number of arguments required then we can handle with default arguments or with variable number of argument methods.
+class addition:
+    def sum(self,a=None,b=None,c=None):
+        if a!=None and b!=None and c!=None:
+            print("SUM:",a+b+c)
+        elif a!=None and b!=None:
+            print("sum:",a+b)
+        else:
+            print("Please provide 2 or 3 arguments")
+t1=addition()
+t1.sum(10,20,30)  #SUM: 60
+t1.sum(10,20)  #sum: 30
+t1.sum(10)  #Please provide 2 or 3 arguments
+t1.sum() #Please provide 2 or 3 arguments
+
+class addition:
+    def sum(self,*n):
+        total=0
+        for i in n:
+            total=total+i
+        print("sum:", total)
+t1=addition()
+t1.sum(10,20,30)  #sum: 60
+t1.sum(10,20)  #sum: 30
+t1.sum(10)  #sum: 10
+t1.sum()  #sum: 0
+
+Constructor Overloading
+Constructor overloading is not possible in Python. If we define multiple constructors then the last constructor will be considered.
+
+
+Method overriding (runtime polymorphism)
+What ever members available in the parent class are by default available to the child class through inheritance. 
+If the child class not satisfied with parent class implementation then child class is allowed to redefine that method in the child class based on its 
+requirement, This concept is called overriding.
+Overriding concept applicable for both methods and constructors.
+From Overriding method of child class, we can call parent class method also by using super() method.
+
+class P:
+    def property(self):
+        print("gold+land+money")
+    def marry(self):
+        print("Madhuri")
+class C(P):
+    def marry(self):
+        print("Sunny")
+c = C()
+c.property()  # gold+land+money
+c.marry()  # Sunny
+
+class P:
+    def property(self):
+        print("gold+land+money")
+    def marry(self):
+        print("Madhuri")
+class C(P):
+    def marry(self):
+        super().marry()
+        print("sunny")
+c = C()
+c.property()  # gold+land+money
+c.marry()  # sunny
+
+class P:				# Demo Program for Constructor overriding
+    def __init__(self):
+        print("parent constructor")
+class C(P):
+    def __init__(self):
+        print("child constructor")
+c = C()  # child constructor  
+
+class Person:				# Demo Program to call Parent class constructor by using super()
+    def __init__(self,name,age):
+        self.name = name
+        self.age = age
+class Employee(Person):
+    def __init__(self,name,age,eno,esal):
+        super().__init__(name,age)	# From child class constructor we can call parent class constructor by using super() method.
+        self.eno = eno
+        self.esal = esal
+    def display(self):
+        print(self.name,self.age,self.eno,self.esal)
+e = Employee("parshu",27,101,38000)
+e.display()	# parshu 27 101 38000
+
+
+Q. Using members of one class inside another class
+We can use members of one class inside another class by using the following ways
+1.By Composition (Has-A Relationship)
+2.By Inheritance (IS-A Relationship)
+
+
+
+Q. IS-A vs HAS-A Relationship ?
+If we want to extend existing functionality with some more extra functionality then we should go for IS-A Relationship
+If we dont want to extend and just we have to use existing functionality then we should go for HAS-A Relationship
+
+
+
+Q. What is  Composition (Has-A Relationship) ?
+By using Class Name or by creating object we can access members of one class inside another class is nothing but composition (Has-A Relationship).
+The main advantage of Has-A Relationship is Code Reusability.
+
+class Engine:
+    a=10
+    def __init__(self):
+        self.b=20
+    def m1(self):
+        print('Engine Specific Functionality')
+
+class Car:
+    def __init__(self):
+        self.engine=Engine()
+    def m2(self):
+        print('Car using Engine Class Functionality')
+        print(self.engine.a)
+        print(self.engine.b)
+        self.engine.m1()
+
+c=Car()
+c.m2()
+
+Car using Engine Class Functionality
+10
+20
+Engine Specific Functionality
+
+
+
+class Car:
+    def __init__(self,name,modelNo,colour):
+        self.name=name
+        self.modelNo=modelNo
+        self.colour=colour
+    def carinfo(self):
+        print(f"car name:{self.name}, ModelNo:{self.modelNo}, Colour:{self.colour}")
+
+class Employee:
+    def __init__(self,ename,esal,car):
+        self.ename=ename
+        self.esal=esal
+        self.car=car
+    def empinfo(self):
+        print(f"Employee Name:{self.ename}, Employee Salary:{self.esal}")
+        print("Employee Car:")
+        self.car.carinfo()
+
+c=Car("Benz","A1050","White")
+e=Employee("Parshu",51000,c)
+e.empinfo()
+
+Employee Name:Parshu, Employee Salary:51000
+Employee Car:
+car name:Benz, ModelNo:A1050, Colour:White
+
+In the above program Employee class Has-A Car reference and hence Employee class can access all members of Car class.
+
+
+
+Q. What is Inheritance(IS-A Relationship) ?
+What ever variables, methods and constructors available in the parent class by default available to the child classes and we are not required to rewrite. 
+Hence the main advantage of inheritance is Code Reusability and we can extend existing functionality with some more extra functionality.
+
+Syntax : class childclass(parentclass):
+
+class P:
+    a = 10
+    def __init__(self):
+        self.b = 20
+    def m1(self):
+        print("Parent Instance Method")
+    @classmethod
+    def m2(cls):
+        print("Parent Class Method")
+    @staticmethod
+    def m3():
+        print("Parent Satic Method")
+
+class C(P):
+    pass
+
+c=C()
+print(c.a) #10
+print(c.b) #20
+c.m1() #Parent Instance Method
+c.m2() #Parent Class Method
+c.m3() #Parent Satic Method
+
+
+
+class P:
+    10 methods
+class C(P):
+   5 methods
+
+In the above example Parent class contains 10 methods and these methods automatically available to the child class and we are not required to rewrite 
+those methods(Code Reusability) Hence child class contains 15 methods.
+
+Note: What ever members present in Parent class are by default available to the child class through inheritance.
+
+class P:
+    def m1(self):
+        print('Parent class method')
+class C(P):
+    def m2(self):
+        print("Child Class Method")
+
+c=C()
+c.m1() #Parent class method
+c.m2() #Child Class Method
+
+What ever methods present in Parent class are automatically available to the child class and hence on the child class reference we can call both parent 
+class methods and child class methods. Similarly variables also.
+
+class P:
+    a=10
+    def __init__(self):
+        self.b=20
+
+class C(P):
+    d=30
+    def __init__(self):
+        super().__init__()  #If we comment this line then variable b is not available to the child class.
+        self.e=40
+
+c=C()
+print(c.a,c.b,c.d,c.e) #10 20 30 40
+
+
+
+
+Q. Composition vs Aggregation ?
+Composition: Without existing container object if there is no chance of existing contained object then the container and contained objects are strongly 
+             associated and that strong association is nothing but Composition.
+Eg: University contains several Departments and without existing university object there is no chance of existing Department object. 
+    Hence University and Department objects are strongly associated and this strong association is nothing but Composition.
+
+Aggregation: Without existing container object if there is a chance of existing contained object then the container and contained objects are weakly 
+             associated and that weak association is nothing but Aggregation.
+Eg: Department contains several Professors. Without existing Department still there may be a chance of existing Professor. Hence Department and Professor 
+    objects are weakly associated, which is nothing but Aggregation.
+
+class Student:
+    CollegeName='GCOEJ'
+    def __init__(self,name):
+        self.name=name
+
+print(Student.CollegeName) #GCOEJ
+s=Student('Parshuram')
+print(s.name) #Parshuram
+print(s.__dict__) #{'name': 'Parshuram'}
+
+In the above example without existing Student object there is no chance of existing his name. Hence Student Object and his name are strongly associated 
+which is nothing but Composition.
+
+But without existing Student object there may be a chance of existing collegeName. Hence Student object and collegeName are weakly associated which is 
+nothing but Aggregation.
+
+
+Conclusion:
+The relation between object and its instance variables is always Composition where as the relation between object and static variables is Aggregation.
+
+
+
+
+Note: Whenever we are creating child class object then child class constructor will be executed. If the child class does not contain constructor then 
+      parent class constructor will be executed, but parent object won't be created.
+
+class P:
+    def __init__(self):
+        print(id(self))
+class C(P):
+    pass
+c=C()
+print(id(c))
+2167916900816
+2167916900816
+
+
+
+Note: In the above example when ever we are creating child class object both parent and child class constructors got executed to perform initialization of 
+      child object
+
+class P:
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+class C(P):
+    def __init__(self,name,age,rollno,marks):
+        super().__init__(name,age)
+        self.rollno=rollno
+        self.marks=marks
+    def m1(self):
+        print(f"Name:{self.name}, Age:{self.age}, RollNo:{self.rollno}, Marks:{self.marks}")
+c=C('Parshuram',27,51,86)
+c.m1()  #Name:Parshuram, Age:27, RollNo:51, Marks:86
+
+
+Q. inheritance?
+Inheritance provides code reusability to the program because we can use an existing class to create a new class instead of creating it from scratch.
+In inheritance, the child class acquires the properties and can access all the data members and functions defined in the parent class. 
+A child class can also provide its specific implementation to the functions of the parent class.
+
+single inheritance A B(A)
+Multilevel Inheritance A B(A) C(B)
+Hierarchical Inheritance A B(A) C(A) D(A)
+Multiple Inheritance A B C(A,B)
+
+Single Inheritance ?
+The concept of inheriting the properties from one class to another class is known as single inheritance.
+class A:
+    def m1(self):
+        print("Parent Method")
+class B(A):
+    def m2(self):
+        print("Child Method")
+b = B()
+b.m1()  # Parent Method
+b.m2()  # Child Method
+
+Multi-Level inheritance
+The concept of inheriting the properties from multiple classes to single class with the concept of one after another is known as multilevel inheritance
+class A:
+    def m1(self):
+        print("Parent Method")
+class B(A):
+    def m2(self):
+        print("Child Method")
+class C(B):
+    def m3(self):
+        print("Sub Child Method")
+c = C()
+c.m1()  # Parent Method
+c.m2()  # Child Method
+c.m3()  # Sub Child Method
+
+Hierarchical Inheritance 
+The concept of inheriting properties from one class into multiple classes which are present at same level is known as Hierarchical Inheritance
+class A:
+    def m1(self):
+        print("Parent Method")
+class B(A):
+    def m2(self):
+        print("Child Method")
+class C(A):
+    def m3(self):
+        print("Sub Child Method")
+b = B()
+b.m1() #Parent Method
+b.m2() #Child Method
+c = C()
+c.m1() #Parent Method
+c.m3() #Sub Child Method
+
+Multiple inheritance
+The concept of inheriting the properties from multiple classes into a single class at a time, is known as multiple inheritance.
+class P1:
+    def m1(self):
+        print("Parent1 Method")
+class P2:
+    def m2(self):
+        print("Parent2 Method")
+class C(P1,P2):
+    def m3(self):
+        print("child2 Method")
+c = C()
+c.m1() # Parent1 Method
+c.m2() # Parent2 Method
+c.m3() # child2 Method
+
+If the same method is inherited from both parent classes, then Python will always consider the order of Parent classes in the declaration of the child class.
+
+class C(P1,P2): ===>P1 method will be considered 
+class C(P2,P1): ===>P2 method will be considered
+
+class P1:
+    def m1(self):
+        print("Parent1 Method")
+class P2:
+    def m1(self):
+        print("Parent2 Method")
+class C(P1,P2):
+    def m2(self):
+        print("child2 Method")
+c = C()
+c.m1() #Parent1 Method
+c.m2() #child2 Method
+
+Hybrid Inheritance: Combination of Single, Multi level, multiple and Hierarchical inheritance is known as Hybrid Inheritance.
+
+Cyclic Inheritance 
+The concept of inheriting properties from one class to another class in cyclic way, is called Cyclic inheritance.
+Python won't support for Cyclic Inheritance of course it is really not required.
+Eg. class A(A):pass
+NameError: name 'A' is not defined
+Eg. class A(B):
+	pass
+    class B(A):
+	pass
+NameError: name 'B' is not defined
+
+
+Method Resolution Order (MRO)
+In Hybrid Inheritance the method resolution order is decided based on MRO algorithm. This algorithm is also known as C3 algorithm.
+It follows DLR (Depth First Left to Right) i.e Child will get more priority than Parent.
+Left Parent will get more priority than Right Parent 
+MRO(X)=X+Merge(MRO(P1),MRO(P2),...,ParentList)
+
+Q. Head Element vs Tail Terminology ?
+Assume C1,C2,C3,...are classes. In the list : C1C2C3C4C5....
+C1 is considered as Head Element and remaining is considered as Tail.
+
+Q. How to find Merge ?
+Take the head of first list
+If the head is not in the tail part of any other list,then add this head to the result and remove it from the lists in the merge.
+If the head is present in the tail part of any other list,then consider the head element of the next list and continue the same process.
+Note: We can find MRO of any class by using mro() function. print(ClassName.mro())
+
+Q. Demo Program-1
+mro(A)=A,object
+mro(B)=B,A,object 
+mro(C)=C,A,object 
+mro(D)=D,B,C,A,object
+
+class A:pass
+class B(A):pass
+class C(A): pass
+class D(B,C):pass
+print(A.mro()) #[<class '__main__.A'>, <class 'object'>]
+print(B.mro()) #[<class '__main__.B'>, <class '__main__.A'>, <class 'object'>]
+print(C.mro()) #[<class '__main__.C'>, <class '__main__.A'>, <class 'object'>]
+print(D.mro()) #[<class '__main__.D'>, <class '__main__.B'>, <class '__main__.C'>, <class '__main__.A'>, <class 'object'>]
+
+Q. Demo Program-2 
+mro(A)=A,object 
+mro(B)=B,object 
+mro(C)=C,object 
+mro(X)=X,A,B,object 
+mro(Y)=Y,B,C,object 
+mro(P)=P,X,A,Y,B,C,object
+
+Q. Finding mro(P) by using C3 algorithm ?
+Formula: MRO(X)=X+Merge(MRO(P1),MRO(P2),...,ParentList)
+
+mro(p)= P+Merge(mro(X),mro(Y),mro(C),XYC)
+= P+Merge(XABO,YBCO,CO,XYC)
+= P+X+Merge(ABO,YBCO,CO,YC)
+= P+X+A+Merge(BO,YBCO,CO,YC)
+= P+X+A+Y+Merge(BO,BCO,CO,C)
+= P+X+A+Y+B+Merge(O,CO,CO,C)
+= P+X+A+Y+B+C+Merge(O,O,O)
+= P+X+A+Y+B+C+O
+
+class A:pass
+class B:pass
+class C:pass
+class X(A,B):pass
+class Y(B,C):pass
+class P(X,Y,C):pass
+print(A.mro())#AO
+print(X.mro())#XABO
+print(Y.mro())#YBCO
+print(P.mro())#PXAYBCO
+
+
+Q. super() Method 
+super() is a built-in method which is useful to call the super class constructors,variables and methods from the child class.
+In the below program we are using super() method to call parent class constructor and display() method
+
+class P:
+    def __init__(self,name,age):
+        self.name = name
+        self.age = age
+    def display(self):
+        print(f"Name:{self.name}, Age:{self.age}")
+class C(P):
+    def __init__(self,name,age,rollno ,marks ):
+        super().__init__(name,age)
+        self.rollno = rollno
+        self.marks = marks
+    def display(self):
+        super().display()
+        print(f"ROLLNO:{self.rollno}, Marks:{self.marks}")
+c = C('parshuram',27,101,87)  # Name:parshuram, Age:27
+c.display()  # ROLLNO:101, Marks:87
+
+
+
+Q. Demo Program-2 for super()
+class P:
+    a=10
+    def __init__(self):
+        self.b=20
+    def m1(self):
+        print("Parent instance method")
+    @classmethod
+    def m2(cls):
+        print('Parent class method')
+    @staticmethod
+    def m3():
+        print("Parent static method")
+class C(P):
+    a = 888
+    def __init__(self):
+        b=999
+        super().__init__()
+        print(super().a) #10
+        super().m1() #Parent instance method
+        super().m2() #Parent class method 
+        super().m3() #Parent static method
+c=C()
+
+
+Q. How to call method of a particular Super class ?
+We can use the following approaches
+
+1) super(D,self).m1()		It will call m1() method of super class of D.
+
+2) A.m1(self)		It will call A class m1() method
+
+class A:
+    def m1(self):
+        print('A class method')
+class B(A):
+    def m1(self):
+        print('B class method')
+class C(B):
+    def m1(self):
+        print('C class method')
+class D(C):
+    def m1(self):
+        print('D class method')
+class E(D):
+    def m1(self):
+        A.m1(self)
+e=E()
+e.m1() #A class method
+
+Q. Various Important Points about super() ?
+Case-1: From child class we are not allowed to access parent class instance variables by using super(),Compulsory we should use self only.
+        But we can access parent class static variables by using super().
+
+class P:
+    a=10
+    def __init__(self):
+        self.b=20
+class C(P):
+    def m1(self):
+        print(super().a) #10
+        print(self.b)  # 20
+        print(super().b)  # AttributeError: 'super' object has no attribute 'b'
+c = C()
+c.m1()
+
+Case-2: From child class constructor and instance method, we can access parent class instance method,static method and class method by using super()
+
+class P:
+    def __init__(self):
+        print('parent constructor')
+    def m1(self):
+        print('Parent Instance Method')
+    @classmethod
+    def m2(cls):
+        print('Parent class method')
+    @staticmethod
+    def m3():
+        print('Parent static method')
+class C(P):
+    def __init__(self):
+        super().__init__() #parent constructor
+        super().m1() #Parent Instance Method
+        super().m2() #Parent class method
+        super().m3() #Parent static method
+    def m1(self):
+        super().__init__() #parent constructor
+        super().m1() #Parent Instance Method
+        super().m2() #Parent class method
+        super().m3() #Parent static method
+c=C()
+c.m1()
+
+
+
+Case-3: From child class, class method we cannot access parent class instance methods and constructors by using super() directly(but indirectly possible). 
+	But we can access parent class static and class methods.
+
+class P:
+    def __init__(self):
+        print('parent constructor')
+    def m1(self):
+        print('Parent Instance Method')
+    @classmethod
+    def m2(cls):
+        print('Parent class method')
+    @staticmethod
+    def m3():
+        print('Parent static method')
+class C(P):
+    @classmethod
+    def m1(cls):
+        #super().__init__() #invalid
+        #super().m1() #invalid
+        super().m2() # Parent class method
+        super().m3() # Parent static method
+C.m1()
+
+From Class Method of Child class,how to call parent class instance methods and constructors:
+
+class P:
+    def __init__(self):
+        print('parent constructor')
+    def m1(self):
+        print('Parent Instance Method')
+class C(P):
+    @classmethod
+    def m2(cls):
+        super(C,cls).__init__(cls) # parent constructor
+        super(C,cls).m1(cls) # Parent Instance Method
+C.m2()
+
+
+
+
+Case-4: In child class static method we are not allowed to use super() generally (But in special way we can use)
+
+class P:
+    def __init__(self):
+        print('parent constructor')
+    def m1(self):
+        print('Parent Instance Method')
+    @classmethod
+    def m2(cls):
+        print('Parent class Method')
+    @staticmethod
+    def m3():
+        print('Parent static Method')
+class C(P):
+    @staticmethod
+    def m1():
+        super().m1() #invalid
+        super().m2() #invalid
+        super().m3() #invalid
+C.m1() #RuntimeError: super(): no arguments
+
+Q. How to call parent class static method from child class static method by using super()?
+
+class P:
+    @staticmethod
+    def m1():
+        print('Parent static Method')
+class C(P):
+    @staticmethod
+    def m2():
+        super(C,C).m1()
+C.m2()  #Parent static Method
+
+
+=====================================================================================
+
+
+1. Abstract Method
+2. Abstract class
+3. Interface
+4. Public,Private and Protected Members
+5. str   () method
+6. Difference between str() and repr() functions
+
+
+
+Q. Data abstraction
+
+Abstraction is used to hide the internal functionality of the function from users. User is familiar with that "what function does" but they don't know 
+"how it does."
+an abstraction is used to hide the irrelevant data/class in order to reduce the complexity. The users only interact with the basic implementation of the 
+function, but inner working is hidden. 
+
+from abc import ABC
+class Polygon(ABC):
+    def sides(self): # abstract method
+        pass
+class Triangle(Polygon):
+    def sides(self):
+        print("Triangle has 3 sides")
+class Pentagon(Polygon):
+    def sides(self):
+        print("Pentagon has 5 sides")
+class Hexagon(Polygon):
+    def sides(self):
+      print("Hexagon has 6 sides")
+class square(Polygon):
+    def sides(self):
+        print("I have 4 sides")
+
+t = Triangle()
+t.sides() #Triangle has 3 sides
+
+s = square()
+s.sides() #I have 4 sides
+
+p = Pentagon()
+p.sides() #Pentagon has 5 sides
+
+k = Hexagon()
+k.sides() #Hexagon has 6 sides
+
+
+
+
+Q. Abstract Method ?
+
+Sometimes we don't know about implementation,still we can declare a method. Such type of methods are called abstract methods.
+i.e abstract method has only declaration but not implementation.
+
+In python we can declare abstract method by using @abstractmethod decorator as follows.
+
+@abstractmethod 
+def m1(self): pass
+
+@abstractmethod decorator present in abc module. Hence compulsory we should import abc module,otherwise we will get error.
+
+abc==>abstract base class module
+
+Child classes are responsible to provide implemention for parent class abstract methods.
+
+from abc import *
+class P:
+    @abstractmethod
+    def m1(self):
+        pass
+
+
+
+Q. Abstract class ?
+
+Some times implementation of a class is not complete,such type of partially implementation classes are called abstract classes. 
+Every abstract class in Python should be derived from ABC class which is present in abc module.
+
+
+Case-1: In the below code we can create object for Test class b'z it is concrete class and it does not conatin any abstract method.
+
+from abc import *
+class Test:
+    pass
+t=Test()
+
+
+
+Case-2: In the below code we can create object,even it is derived from ABC class,b'z it does not contain any abstract method.
+
+from abc import *
+class Test(ABC):
+    pass
+t=Test()
+
+
+Case-3: "abstract class with abstract method instantiation is not possible"
+
+from abc import *
+class Test(ABC):
+    @abstractmethod
+    def m1(self):
+        pass
+t=Test() #TypeError: Can't instantiate abstract class Test with abstract methods m1 
+
+
+Case-4:  We can create object even class contains abstract method b'z we are not extending ABC class. 
+
+from abc import *
+class Test:
+    @abstractmethod
+    def m1(self):
+        pass
+t=Test()
+
+
+
+Case-5:  
+
+from abc import *
+class Test:
+    @abstractmethod
+    def m1(self):
+        print('Hello')
+t=Test()
+t.m1()  #Hello
+
+
+
+Conclusion: If a class contains atleast one abstract method and if we are extending ABC class then instantiation is not possible.
+
+"abstract class with abstract method instantiation is not possible"
+
+
+
+Parent class abstract methods should be implemented in the child classes. otherwise we cannot instantiate child class.
+If we are not creating child class object then we won't get any error.
+
+
+Case-1: It is valid b'z we are not creating Child class object.
+
+from abc import *
+class P(ABC):
+    @abstractmethod
+    def m1(self):
+        pass
+class C(P):
+        pass
+
+
+Case-2:  "abstract class with abstract method instantiation is not possible"
+ 
+from abc import *
+class P(ABC):
+    @abstractmethod
+    def m1(self):
+        pass
+class C(P):
+        pass
+c=C()  #TypeError: Can't instantiate abstract class C with abstract methods m1
+
+
+Note: If we are extending abstract class and does not override its abstract method then child class is also abstract and instantiation is not possible.
+
+Note: Abstract class can contain both abstract and non-abstract methods also.
+
+
+
+Q. Interfaces In Python ?
+
+In general if an abstract class contains only abstract methods such type of abstract class is considered as interface.
+
+Note: The inbuilt function globals()[str] converts the string 'str' into a class name and returns the classname.
+
+
+
+Q. Concreate class vs Abstract Class vs Inteface ?
+
+1. If we dont know anything about implementation just we have requirement specification then we should go for interface.
+
+2. If we are talking about implementation but not completely then we should go for abstract class.(partially implemented class)
+
+3. If we are talking about implementation completely and ready to provide service then we should go for concrete class.
+
+
+
+Public, Protected and Private Attributes 
+By default every attribute is public. We can access from anywhere either within the class or from outside of the class.
+Eg: name='durga'
+
+Protected attributes can be accessed within the class anywhere but from outside of the class only in child classes. We can specify an attribute as protected 
+by prefexing with _ symbol. But is is just convention and in reality does not exists protected attributes.
+syntax: _variablename=value   Eg: _name='durga'
+
+private attributes can be accessed only within the class.i.e from outside of the class we cannot access. We can declare a variable as private explicitly 
+by prefexing with 2 underscore symbols.
+syntax:  __variablename=value    Eg:     __name='durga'
+
+
+__str__() method
+Whenever we are printing any object reference internally __str__() method will be called which is returns string in the following format
+<__main__.classname object at 0x022144B0>
+To return meaningful string representation we have to override __str__() method.
+
+class student:
+    def __init__(self,name,rollno):
+        self.name = name
+        self.rollno = rollno
+    def __str__(self):
+        return 'This is Student with Name:{} and Rollno:{}'.format(self.name,self.rollno)
+s1 = student('parshu',51)
+print(s1)  # This is Student with Name:parshu and Rollno:51
+output without overriding __str__()   #<__main__.Student object at 0x022144B0>
+output with overriding __str__()  	#This is Student with Name:parshu and Rollno:51
+
+
+
+
+Q. Difference between str() and repr() OR Difference between __str__() and __repr__() 
+
+str() internally calls __str__() function and hence functionality of both is same.  Similarly,
+
+repr() internally calls __repr__() function and hence functionality of both is same.
+
+str() returns a string containing a nicely printable representation object.
+The main purpose of str() is for readability.It may not possible to convert result string to original object.
+
+
+import datetime
+print(datetime.datetime.now())  #2021-08-30 23:02:27.984077
+s = str(datetime.datetime.now())
+print(s)    # 2021-08-30 23:02:14.221041  converting datetime object to str
+print(eval(s)) # SyntaxError: invalid token   converting str object to datetime
+
+But repr() returns a string containing a printable representation of object.
+The main goal of repr() is unambigouous. We can convert result string to original object by using eval() function,which may not possible in str() function.
+
+import datetime
+print(datetime.datetime.now())  #2021-08-30 23:02:27.984077
+s=repr(datetime.datetime.now())
+print(s)    #datetime.datetime(2021, 8, 30, 23, 6, 34, 574269)  converting datetime object to str
+print(eval(s)) #2021-08-30 23:06:34.574269   converting str object to datetime
+
+
+
+
+
+
+
+
+======================================================================================================================
+
+
+Regular Expressions
+
+If we want to represent a group of Strings according to a particular format/pattern then we should go for Regular Expressions.
+
+Regular Expressions is a declarative mechanism to represent a group of Strings according to particular format/pattern.
+
+We can develop Regular Expression Based applications by using python module: re
+
+This module contains several inbuilt functions to use Regular Expressions very easily in our applications.
+
+Eg 1: We can write a regular expression to represent all mobile numbers.
+Eg 2: We can write a regular expression to represent all mail ids.
+
+
+Q. application areas of Regular Expressions?
+
+To develop validation frameworks/validation logic
+To develop Pattern matching applications (ctrl-f in windows, grep in UNIX etc)
+To develop Translators like compilers, interpreters etc
+To develop digital circuits
+To develop communication protocols like TCP/IP, UDP etc.
+
+
+
+Compile()  re module contains compile() function to compile a pattern into RegexObject.  pattern = re.compile("ab")
+
+finditer() Returns an Iterator object which yields Match object for every Match
+
+matcher = pattern.finditer("abaababa")
+
+On Match object we can call the following methods.
+
+start()  Returns start index of the match
+end()  Returns end+1 index of the match
+group()  Returns the matched string
+
+
+
+import re
+count=0
+pattern=re.compile("ab")
+matcher=pattern.finditer("abaaabnnab")
+for match in matcher:
+    count+=1
+    print(match.start(),"--",match.end(),"--",match.group())
+print("The number of occurrences: ",count)
+
+0 -- 2 -- ab
+4 -- 6 -- ab
+8 -- 10 -- ab
+The number of occurrences:  3
+
+
+import re
+count = 0
+for i in re.finditer('ab','absjndjnabjnjknab'):
+    count+=1
+    print(i.start(),'-',i.end(),'-',i.group())
+print(count)
+
+0 - 2 - ab
+8 - 10 - ab
+15 - 17 - ab
+3
+
+
+
+Q. Character classes?
+
+We can use character classes to search a group of characters
+
+[abc]		Either a or b or c
+[^abc]		Except a and b and c
+[a-z]		Any Lower case alphabet symbol
+[A-Z]		Any upper case alphabet symbol
+[a-zA-Z]	Any alphabet symbol
+[0-9] 		Any digit from 0 to 9
+[a-zA-Z0-9]	Any alphanumeric character
+[^a-zA-Z0-9]	Except alphanumeric characters(Special Characters)
+
+import re
+matcher=re.finditer("x","a7b@k9z")
+for match in matcher:
+    print(match.start(),"  ",match.group())
+
+x = [abc]
+
+0  a 
+2  b
+
+x = [^abc]
+
+1  7
+3  @
+4  k
+5  9
+6  z
+
+x = [a-z]
+
+0  a 
+2  b
+4  k
+6  z
+
+x = [0-9]
+
+1  7
+5  9
+
+x = [a-zA-Z0-9]
+
+0  a
+1  7
+2  b
+4  k
+5  9
+6  z
+
+x = [^a-zA-Z0-9]
+
+3  @
+
+
+Q. Pre defined Character classes?
+
+\s	Space character
+\S	Any character except space character
+\d	Any digit from 0 to 9
+\D 	Any character except digit
+\w	Any word character [a-zA-Z0-9]
+\W	Any character except word character (Special Characters)
+.	Any character including special characters
+
+
+import re
+for match in re.finditer("x","a7b k@9z"):
+    print(match.start(),"  ",match.group())
+
+
+x = \s
+3 
+
+x = \S
+
+0  a 
+1  7
+2  b
+4  k
+5  @
+6  9
+7  z
+
+x = \d
+1  7
+6  9
+
+x = \D
+0  a 
+2  b
+3  
+4  k
+5  @
+7  z
+
+x = \w
+0  a 
+1  7
+2  b
+4  k
+6  9
+7  z
+
+x = \W
+3 
+5  @
+
+x = .
+0  a
+1  7
+2  b
+3  x
+4  k
+5  @
+6  9
+7  z
+
+
+Q. Qunatifiers?
+
+We can use quantifiers to specify the number of occurrences to match.
+
+a   Exactly one 'a' 
+a+  Atleast one 'a'
+a*  Any number of a's including zero number
+a?  Atmost one 'a' ie either zero number or one number 
+a{m}  Exactly m number of a's
+a{m,n} Minimum m number of a's and Maximum n number of a's
+
+
+import re
+for match in re.finditer("x","abaabaaab"):
+    print(match.start(),"  ",match.group())
+
+
+x = a
+0  a
+2  a
+3  a
+5  a
+6  a
+7  a
+
+x = a+
+0  a 
+2  aa
+5  aaa
+
+x = a*
+0  a 
+1  
+2  aa
+4  
+5  aaa
+8  
+9  
+
+x = a?
+0    a
+1    
+2    a
+3    a
+4    
+5    a
+6    a
+7    a
+8    
+9    
+
+x = a{3}:
+5    aaa
+
+x = a{2,4}:
+2    aa
+5    aaa
+
+
+^x  It will check whether target string starts with x or not x
+$  It will check whether target string ends with x or not
+
+
+
+Q. Important functions of re module?
+
+match()
+fullmatch()
+search() 
+findall() 
+finditer()
+sub() 
+subn()
+split()
+compile()
+
+
+
+Q. Write a Python Program to check whether the given number is valid mobile number or not?
+
+import re
+m=re.fullmatch("[7-9]\d{9}",9552729353)
+if m!=None:
+  print("valid Number")
+else:
+  print("Invalid number")
+
+
+
+Q. Write a python program to extract all mobile numbers present in input.txt where numbers are mixed with normal text data?
+
+import re
+f1=open("input.txt","r")
+f2=open("output.txt","w")
+for line in f1:
+  list=re.findall("[7-9]\d{9}",line)
+for n in list:
+ f2.write(n+"\n")
+ print("Extracted all Mobile Numbers into output.txt")
+f1.close()
+f2.close()
+
+
+
+
+
+Q. Web Scraping by using Regular Expressions?
+
+The process of collecting information from web pages is called web scraping. 
+
+In web scraping to match our required patterns like mail ids, mobile numbers we can use regular expressions.
+
+
+
+Q. Program to get all phone numbers of redbus.in by using web scraping and regular expressions?
+
+import re,urllib
+import urllib.request
+u=urllib.request.urlopen("https://www.redbus.in/info/contactus")
+text=u.read()
+numbers=re.findall("[0-9-]{7}[0-9-]+",str(text),re.I)
+for n in numbers:
+  print(n)
+
+
+
+================================================================================================================
+
+
+Multi Threading
+Executing several tasks simultaneously is the concept of multitasking. the main advantage of multi tasking is to improve performance of the system by 
+reducing response time.
+Types- Process based Multi Tasking,Thread based Multi Tasking.
+Where ever a group of independent jobs are available, then it is highly recommended to execute simultaneously instead of executing one by one.
+For such type of cases we should go for Multi Threading.
+Process based Multi Tasking: This type of multi tasking is best suitable at operating system level.
+
+Thread based MultiTasking
+Executing several tasks simultaneously where each task is a seperate independent part of the same program, is called Thread based multi tasking, and 
+each independent part is called a Thread.
+This type of multi tasking is best suitable at programmatic level.
+Whether it is process based or thread based, the main advantage of multi tasking is to improve performance of the system by reducing response time.
+application areas of multi threading: To implement Multimedia graphics, To develop animations, To develop video games, To develop web and application servers
+
+Where ever a group of independent jobs are available, then it is highly recommended to execute simultaneously instead of executing one by one.
+For such type of cases we should go for Multi Threading.
+
+MainThread: Every Python Program by default contains one thread which is nothing but MainThread.
+import threading
+print(threading.currentThread())  # <_MainThread(MainThread, started 4868)>
+print(threading.current_thread())  # <_MainThread(MainThread, started 8732)>
+print(threading.current_thread().getName()) # MainThread
+print(threading.currentThread().getName())  # MainThread    #current executing thread
+
+We can create a thread in Python by using 3 ways
+1) Creating a Thread without using any class
+2) Creating a Thread by extending Thread class
+3) Creating a Thread without extending Thread class
+
+1) Creating a Thread without using any class
+from threading import *
+def dispaly():
+    for i in range(1,11):
+        print('child thread')
+t=Thread(target=dispaly) #creating Thread object
+t.start() #starting of Thread
+for i in range(1,11):
+    print('Main Thread')
+
+If multiple threads present in our program, then we cannot expect execution order and hence we cannot expect exact output for the multi threaded programs. 
+B'z of this we cannot provide exact output for the above program.It is varied from machine to machine and run to run.
+Note: Thread is a pre defined class present in threading module which can be used to create our own Threads.
+
+2) Creating a Thread by extending Thread class
+We have to create child class for Thread class. In that child class we have to override run() method with our required job. Whenever we call start() method 
+then automatically run() method will be executed and performs our job.
+from threading import *
+class MyThread(Thread):
+    def Run(self):
+        for i in range(10):
+            print('Child Thread-1')
+t=MyThread()
+t.start()
+for i in range(10):
+    print('Main Thread-1')
+
+3) Creating a Thread without extending Thread class
+
+from threading import *
+class Test:
+    def display(self):
+        for i in range(10):
+            print('Child Thread-2')
+obj=Test()
+t=Thread(target=obj.display)
+t.start()
+for i in range(10):
+    print('Main Thread-2')
+
+Setting and Getting Name of a Thread
+from threading import *
+print(current_thread().getName())  # MainThread
+current_thread().setName("Pawan Kalyan")
+print(current_thread().getName()) #Pawan Kalyan
+print(current_thread().name)  #Pawan Kalyan
+
+Thread Identification Number(ident)
+For every thread internally a unique identification number is available. We can access this id by using implicit variable "ident"
+from threading import *
+def test():
+    print("Child Thread") #Child Thread
+t=Thread(target=test)
+t.start()
+print("Main Thread Identification Number:",current_thread().ident) #Main Thread Identification Number: 14848
+print("Child Thread Identification Number:",t.ident) #Child Thread Identification Number: 3060
+
+active_count()  This function returns the number of active threads currently running.
+from threading import *
+print(active_count()) #1
+
+enumerate() function: This function returns a list of all active threads currently running.
+from threading import *
+l=enumerate()
+for i in l:
+    print(i.name) #MainThread
+
+isAlive()
+isAlive() method checks whether a thread is still executing or not.
+
+
+from threading import *
+import time
+def test():
+    print("Child Thread") #Child Thread
+t=Thread(target=test)
+t.start()
+print(t.isAlive()) #True
+print(active_count()) #2
+print(current_thread().ident) #12456
+print(t.ident) #17436
+
+for i in enumerate():
+    print(i.name) #MainThread  Thread-1
+time.sleep(5)
+print(t.isAlive()) #False
+print(active_count()) #1
+print(current_thread().ident) #12456
+print(t.ident) #17436
+for i in enumerate():
+    print(i.name) #MainThread
+
+
+join() method
+If a thread wants to wait until completing some other thread then we should go for join() method.
+Note: We can call join() method with time period also. t.join(seconds)
+import socketserver
+from threading import *
+import time
+def display():
+    for i in range(10):
+        print("FT",end=",")
+        time.sleep(2)
+t=Thread(target=display())
+t.start()
+t.join() #This Line executed by Main Thread
+for i in range(10):
+    print("ST",end=",")
+#FT,FT,FT,FT,FT,FT,FT,FT,FT,FT,ST,ST,ST,ST,ST,ST,ST,ST,ST,ST,
+
+
+Daemon Threads
+The threads which are running in the background are called Daemon Threads. The main objective of Daemon Threads is to provide support for Non Daemon 
+Threads( like main thread)	
+Eg: Garbage Collector
+
+Whenever Main Thread runs with low memory, immediately PVM runs Garbage Collector to destroy useless objects and to provide free memory,so that Main Thread 
+can continue its execution without having any memory problems.
+We can check whether thread is Daemon or not by using t.isDaemon() method of Thread class or by using daemon property.
+
+from threading import *
+print(current_thread().isDaemon())  # False
+print(current_thread().daemon)  # False
+current_thread().setDaemon(True)  # RuntimeError: cannot set daemon status of active thread
+
+We can change Daemon nature by using setDaemon() method of Thread class. t.setDaemon(True)
+But we can use this method before starting of Thread.i.e once thread started,we cannot change its Daemon nature,otherwise we will get
+RuntimeException:cannot set daemon status of active thread
+
+
+Default Nature: By default Main Thread is always non-daemon.But for the remaining threads Daemon nature will be inherited from parent to child.
+i.e if the Parent Thread is Daemon then child thread is also Daemon and if the Parent Thread is Non Daemon then ChildThread is also Non Daemon.
+
+from threading import *
+def test():
+    print("CT")  #CT
+t=Thread(target=test())
+print(t.isDaemon())  #False
+t.setDaemon(True)
+print(t.isDaemon())  #True
+
+Note: Main Thread is always Non-Daemon and we cannot change its Daemon Nature b'z it is already started at the beginning only.
+Whenever the last Non-Daemon Thread terminates automatically all Daemon Threads will be terminated.
+
+
+Synchronization
+If multiple threads are executing simultaneously then there may be a chance of data inconsistency problems.
+We are getting irregular output b'z both threads are executing simultaneously wish() function. To overcome this problem we should go for synchronization.
+from threading import *
+import time
+def cricket(name):
+    for i in range(1):
+        print('GM ',end='')
+        time.sleep(2)
+        print(name)
+t1=Thread(target=cricket, args=('Dhoni',))
+t2=Thread(target=cricket, args=('Virat',))
+t1.start()
+t2.start()
+
+GM GM Virat
+Dhoni
+
+In synchronization the threads will be executed one by one so that we can overcome data inconsistency problems.
+Synchronization means at a time only one Thread The main application areas of synchronization are
+1.Online Reservation system
+2.Funds Transfer from joint accounts etc
+
+In Python, we can implement synchronization by using the following
+1.Lock
+2.RLock
+3.Semaphore
+
+The main advantage of synchronization is we can overcome data inconsistency problems.But the main disadvantage of synchronization is it increases waiting 
+time of threads and creates performance problems. Hence if there is no specific requirement then it is not recommended to use synchronization.
+
+
+Q. Inter Thread Communication ?
+Some times as the part of programming requirement, threads are required to communicate with each other. This concept is nothing but interthread communication.
+Eg: After producing items Producer thread has to communicate with Consumer thread to notify about new item.Then consumer thread can consume that new item.
+In Python, we can implement interthread communication by using the following ways
+
+1.Event
+2.Condition
+3.Queue etc
+
+
+=================================================================================================
+
+
+Python Database Programming
+
+Sometimes as the part of Programming requirement we have to connect to the database and we have to perform several operations like creating tables, 
+inserting data,updating data,deleting data,selecting data etc.
+We can use SQL Language to talk to the database and we can use Python to send those SQL commands to the database.
+Python provides inbuilt support for several databases like Oracle, MySql, SqlServer, GadFly, sqlite, etc.
+
+Python has seperate module for each database.
+Eg: cx_Oralce module for communicating with Oracle database 
+    pymssql module for communicating with Microsoft Sql Server
+
+Standard Steps for Python database Programming
+1) Import database specific module Eg: import cx_Oracle
+2) Establish Connection between Python Program and database.
+   We can create this Connection object by using connect() function of the module. con = cx_Oracle.connect(datbase information)
+   Eg: con=cx_Oracle.connect('scott/tiger@localhost')
+3) To execute our sql queries and to hold results some special object is required, which is nothing but Cursor object. 
+   We can create Cursor object by using cursor() method.
+   cursor=con.cursor()
+4) Execute SQL Queries By using Cursor object. For this we can use the following methods
+ i) execute(sqlquery)  To execute a single sql query
+ ii) executescript(sqlqueries)  To execute a string of sql queries seperated by semi-colon ';'
+ iii) executemany()  To execute a Parameterized query
+Eg: cursor.execute("select * from employees")
+
+5) commit or rollback changes based on our requirement in the case of DML Queries(insert|update|delete)
+commit()  Saves the changes to the database 
+rollback()  rolls all temporary changes back
+6) Fetch the result from the Cursor object in the case of select queries 
+ fetchone()  To fetch only one row
+ fetchall()  To fetch all rows and it returns a list of rows 
+ fecthmany(n)  To fetch first n rows
+Eg 1: data =cursor.fetchone() 
+	print(data)
+Eg 2: data=cursor.fetchall() 
+for row in data:
+	print(row)
+
+7) close the resources
+After completing our operations it is highly recommended to close the resources in the reverse order of their opening by using close() methods.
+cursor.close() 
+con.close()
+Note: The following is the list of all important methods which can be used for python database programming.
+connect() cursor() execute() executescript() executemany() commit() rollback() fetchone() fetchall() fetchmany(n) fetch close()
+These methods won't be changed from database to database and same for all databases.
+
+Working with Oracle Database
+
+
+
+
+========================================================= CORE ==================================================================
+
+
+
+
+Q. What is python?
+Python is a general purpose high level programming language.Python was developed by Guido Van Rossam in 1989 .
+officially Python was available to public in Feb 20th 1991. TV Show "The Complete Monty Python's Circus".
+
+
+
+Q. Features of Python?
+Simple and easy to learn,Freeware and Open Source, High Level Programming language, Platform Independent, Dynamically Typed
+Both Procedure Oriented and Object Oriented, Interpreted, Embedded, Extensive Library, Extensible, Portability.
+we are not required to specify the type explicitly. Based on value provided type will be assigned automatically.
+
+
+
+Q. Identifiers?
+A name in Python program is called identifier.
+It can be class name or function name or module name or variable name.
+The only allowed characters in Python are-alphabet symbols(either lower case or upper case), digits(0 to 9), underscore symbol(_)
+
+
+
+Q. Reserved words -------33
+True,False,None,and, or ,not,is,if,elif,else,while,for,break,continue,return,in,yield
+try,except,finally,raise,assert,import,from,as,class,def,pass,global,nonlocal,lambda,del,with
+
+
+
+Q. Data Types ----- 14 -> int,float,complex,bool,string,bytes,bytearray & range,list,tuple,set,dict,frozenset,None.
+int - to represent whole numbers(Decimal form,Binary form,Octal form,Hexa decimal form)
+float - to represent floating point values by using decimal form.
+Complex -real part either by decimal, octal, binary, hexadecimal form. But imaginary part only decimal form.
+bool - to represent boolean values,True and False.
+bytes - Immutable. to represents a group of byte numbers just like an array. only allowed values are 0 to 256.
+bytes array - mutable, both are used to represent binary information like images, video files etc
+range - to represents a sequence of numbers.It generate list of integers/list object. Immutable.
+frozenset - It is exactly same as set except that it is immutable. Hence we cannot use add or remove functions.
+None - means Nothing or No value associated.If the value is not available, then to handle such type of cases None introduced. 
+
+
+
+Q. Operators -----6 types
+1.Arithmetic Operators (+,-,*,/,%,//,**)
+2.Relational/Comparison Operators (<,<=,>,>=,==,!=)
+3.Logical operators 	(and, or, not)
+4.Bitwise oeprators	(&,|,^,~,<<,>>)
+5.Assignment operators (+=, -=, *=, /=, %=, //=, **=, &=, |=, ^=, >>=, <<=)
+6.Special operators 
+	1.Identity operator (is, is not)
+	2.Membership operator (in ,not in)
+
+a=[10,20,30]
+b=[10,20,30]
+print(id(a)) #2350203412160
+print(id(b)) #2350203710592
+print(a is b) #False #is operator for address comparison. 
+print(a == b) #True  #== operator for content comparison.
+
+Q. Operator Precedence ------ () ** ~ - * / % // + - << >>
+
+
+
+Q. eval() ------
+eval Function take a String and evaluate the Result.
+x=input("Enter the expression:")  ---- Enter the expression:10+2*3/4       print(x)	#10+2*3/4
+x=eval(input("Enter the expression:"))	# Enter the expression:10+2*3/4       print(x)	#11.5
+
+
+
+Q. formatted string(%i, %d, %f, %s)
+print(a,b,c) #10 20 30
+print(a,b,c,sep=",") #10,20,30
+
+
+
+Q. Flow control  ------
+conditional statements[if, if - else, if-elif, ef-elif-else], 
+Transfer Statement[break, continue, pass] 
+Iterative statement[for, while]
+
+break - to terminate loop when condition is mate.
+continue - to skip some part of loop when condition is mate.
+pass - It is an empty/null statement.
+Sometimes in the parent class we have to declare a function with empty body and child class responsible to provide proper implementation. 
+Such type of empty body we can define by using pass keyword. (It is something like abstract method in java)
+for loop - Repeat code for every item in sequence.
+while loop - Repeat code as long as condition is true.
+
+
+
+Q. How to read multiple values from the keyboard in a single line: LC
+a,b=[int(x) for x in input("Enter two numbers:").split()] #10 20
+print("Product:", a*b)	# Product: 200
+
+
+
+Q. Infinite loop
+i=0
+while True:
+    i=i+1
+    print('Hello')
+
+Indexing & slicing allowed in string, list,tuple because there insertion order is preserved.
+Indexing & slicing not allowed in set, dictionary because there insertion order is not  preserved.
+
+
+
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+
+String
+
+Any sequence of characters within single quotes or double quotes is considered as a String.
+To use + operator for Strings, compulsory both arguments should be str type.
+To use * operator for Strings, compulsory one argument should be str and other argument should be int. 
+indexing and slicing allowed in string cause insertion order is preserved in string.
+
+s='python is easy language'
+print(s[2]) #t
+print(s[1:7:2]) #yhn
+print(s[:-1]) #python is easy languag
+print(s[-8:-1]) #languag
+print(s[-8:]) #language
+print(s[::-1]) #egaugnal ysae si nohtyp
+print(len(s)) #23
+print(s.find('is')) #7 print(s.find('on')) #4
+print(s.count('a')) #3
+print(s.replace('python','java')) #java is easy language #new object will be created and changes won't be happened in existing object.
+print(s) #python is easy language
+print(s.split()) #['python', 'is', 'easy', 'language']
+print(''.join(reversed(s))) #egaugnal ysae si nohtyp
+print(s.startswith('python')) # True
+print(s.endswith('e'))  # True
+
+print('parshuram198'.isalnum())	#True
+print('pasrhuram'.isalpha())	#True
+print('parshuram198'.isdigit())	#False
+print('198'.isdigit())		#True	
+print('parshuram198'.islower())	#True
+print('parshuram198'.isnumeric()) #Flase
+print('198'.isnumeric())	#True
+print('parhuram198'.isdecimal()) #False
+print('198'.isdecimal())	#True
+print('Parshuram198 Patil'.istitle()) #True
+print(' '.isspace()) #True
+print('PARSHURAM198'.isupper())	#True
+
+
+Q. Write a program to reverse the given String
+1) s = input("Enter the String:") -> print(s[::-1])
+2) s = input("Enter Some String:") -> print(''.join(reversed(s)))
+3) s = 'Python'
+i=len(s)-1
+target = ""
+while i> = 0:
+    target = target+s[i]
+    i = i-1
+print(target) # nohtyP
+
+Q. Program to reverse order of words.
+s = 'Learning Python is very Easy'
+s1 = s.split()
+i = len(s1)-1
+target = ""
+while i >= 0:
+    target = target + s1[i] + " "
+    i = i-1
+print(target) #Easy very is Python Learning 
+
+s = 'Learning Python is very Easy'
+l = s.split()
+i = len(l) - 1
+target = []
+while i >= 0:
+    target.append(l[i])
+    i = i-1
+output = " ".join(target)
+print(output)  # Easy very is Python Learning
+
+Q. Program to reverse internal content of each word.
+s = 'Learning Python is very Easy'
+l = s.split()
+i = len(l)-1
+target = []
+while i >= 0:
+    target.append(l[i][::-1] )
+    i = i-1
+output = " ".join(target)
+print(output)  # ysaE yrev si nohtyP gninraeL
+
+s = 'Learning Python is very Easy'
+s1 = s.split()
+i = len(s1)-1
+target = ""
+while i>=0:
+    target = target + s1[i][::-1] + " "
+    i = i-1
+print(target)  # ysaE yrev si nohtyP gninraeL 
+
+
+Q. Write a program to print characters at odd position and even position for the given String?
+s = 'Learning Python is very Easy'
+print("characters at Even position:",s[::2])  # Lann yhni eyEs
+print("characters at Even position:",s[1::2])  # erigPto svr ay
+
+i = 0
+l = len(s)
+print("characters at Even position:",end="") #characters at Even position:Lann yhni eyEs
+while i<l:
+    print(s[i],end='')
+    i = i+2
+i = 1
+print("\ncharacters at ODD position:",end="") #characters at ODD position:erigPto svr ay
+while i<l:
+    print(s[i],end='')
+    i = i+2
+
+Q. Program to merge characters of 2 strings into a single string by taking characters alternatively.
+s1 = 'Python'
+s2 = 'Java'
+result = ""
+i,j=0,0
+l1 = len(s1)
+l2 = len(s2)
+while i<l1 or j<l2:
+    if i<l1:
+        result = result+s1[i]
+        i = i+1
+    if j<l2:
+        result = result + s2[j]
+        j = j+1
+print(result) #PJyatvhaon
+
+
+Q. Write a program to sort the characters of the string and first alphabet symbols followed by numeric values.
+s="678326gjhbhjg8778njnj7"
+s1,s2="",""
+for x in s:
+    if x.isalpha()==True:
+        s1=s1+x
+    else:
+        s2=s2+x
+print(s1+s2) #gjhbhjgnjnj67832687787
+
+s="678326gjhbhjg8778njnj7"
+s1,s2="",""
+i=0
+while i<len(s):
+    if s[i].isalpha()==True:
+        s1=s1+s[i]
+        i=i+1
+    else:
+        s2=s2+s[i]
+        i=i+1
+print(s1+s2) #gjhbhjgnjnj67832687787
+
+chr(unicode)===>The corresponding character 
+ord(character)===>The corresponding unicode value
+
+Q. Write a program for the following requirement ---> input: a4b3c2 output: aaaabbbcc
+
+Q. Write a program to remove duplicate characters from the given input string?
+s="ABCDABBCDABBBCCCDDEEEF"
+s1=""
+for x in s:
+    if x not in s1:
+        s1=s1+x
+print(s1) #ABCDEF
+
+s="ABCDABBCDABBBCCCDDEEEF"
+l=[]
+for x in s:
+    if x not in l:
+        l.append(x)
+print("".join(l)) #ABCDEF  #to converte list to string used join function.
+
+
+Q. Write a program to find the number of occurrences of each character present in the given String?
+s="ABCABCABBCDE"
+d={}
+for x in s:
+    if x in d.keys():
+        d[x]=d[x]+1
+    else:
+        d[x]=1
+for k,v in d.items():
+    print("{}-{} times".format(k,v),end="") #A-3 timesB-4 timesC-3 timesD-1 timesE-1 times
+
+
+
+
+String Formatting ----
+a=int(input("Enter the first number:")) #10
+b=int(input('Enter the second number:')) #20
+print("addition of {} and {} is {}".format(a,b,a+b)) #addition of 10 and 20 is 30
+print("addition of {} and {} is {}".format(a,a+b,b)) #addition of 10 and 30 is 20
+print(f"addition of {a} and {b} is {a+b}".format(a,a+b,b)) # addition of 10 and 20 is 30
+print("addition of {a} and {b} is {a+b}".format(a,a+b,b)) #KeyError: 'a'
+
+
+
+
+
+================================================
+
+
+
+List 
+
+If we want to represent a group values as a single entity where insertion order preserved and duplicates are allowed, then we should go for List.
+insertion order preserved, duplicate objects are allowed, heterogeneous objects are allowed, 
+We can differentiate duplicate elements by using index and we can preserve insertion order by using index.
+Python supports both positive and negative indexes. +ve index means from left to right where as negative index means right to left
+When we create a list Python provide a over allocate a space in order to appending new elements faster.
+
+
+Q. l=[10,20,30,40] --> l[1] = 50  --> print(l) -> [10, 50, 30, 40]
+
+Q. Creation of List Objects --- list = [], list  =[10,20,30], list = eval(input("Enter List:")), l=list(range(0,10,2)), l=list("python"), l="python".split()
+
+
+Q. What is Nested list --[10,20,[30,40]]
+lst=[10,20,[30,40]] --> print(lst[2]) #[30, 40] --> print(lst[2][0]) #30
+
+
+Q. Accessing elements of List ----- list[0], list[2:7:2],   
+n=[0,1,2,3,4,5,6,7,8,9,10]
+print(n[1:8])	#[1, 2, 3, 4, 5, 6, 7]
+print(n[:])	#[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+print(n[::])	#[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+print(n[:-1])	#[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+print(n[::-1])	#[10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+print(n[2:9:2]) #[2, 4, 6, 8]
+print(n[4::2])	#[4, 6, 8, 10]
+print(n[8:2:-2]) #[8, 6, 4]
+print(n[4:100])	#[4, 5, 6, 7, 8, 9, 10]
+print(n[-8:-1])	#[3, 4, 5, 6, 7, 8, 9]
+
+
+
+Q. Traversing the elements of List --- The sequential access of each element in the list is called traversal.
+n = [0,1,2,3,4,5,6,7,8,9,10]
+i = 0
+while i<len(n):
+    print(n[i],end=",")
+    i=i+1 #0,1,2,3,4,5,6,7,8,9,10,
+
+n = [0,1,2,3,4,5,6,7,8,9,10]
+for x in n:
+    print(x,end=",") #0,1,2,3,4,5,6,7,8,9,10,
+
+Q. To display only even numbers
+n=[0,1,2,3,4,5,6,7,8,9,10]
+for x in n:
+    if x%2==0:
+        print(x,end=",") #0,2,4,6,8,10,
+
+Q. To display elements by index wise
+l = ["A","B","C"]
+i = 0
+for x in l:
+    print("{}'s positive index is {} and Negative index is {}".format(x,i,i-len(l)))
+    i=i+1
+
+(l1.extend(l2), l.remove(x), l.pop(), n.pop(index), l.append(60), l[0], l[1]=200, l[::-1], len(l),l.count(30), l.index(200), l.insert(1,200), l.sort(), 
+l.sort(reverse=True), l.sort(reverse=False))
+
+
+Q. Differences between append() and insert() ---
+list=["A",20,30,40]
+append() --- In List when we add any element it will come in last. list --> append(600) -->  print(list) --> ['A', 20, 30, 40, 600].
+insert() --- In List we can insert any element in particular index number --> list.insert(0,100) --> print(list) --> [100, 'A', 20, 30, 40, 600].
+list.insert(10,800) --> print(list) #[100, 'A', 20, 30, 40, 600, 800] --> If specified index > max index then element will be inserted at last position.
+list.insert(-10,999) --> print(list) #[999, 100, 'A', 20, 30, 40, 600, 800] --> If specified index < min index then element will be inserted at first.
+
+Q. extend() function -- To add all items of one list to another list -- l1.extend(l2) -- all items present in l2 will be added to l1.
+lst1=['A','B','C']
+lst2=['D','E']
+lst1.extend(lst2)
+print(lst1) # ['A', 'B', 'C', 'D', 'E']
+print(lst2) # ['D', 'E']
+lst1.extend(['D','E'])	# ['A', 'B', 'C', 'D', 'E']
+lst1.extend("python")	#['A', 'B', 'C', 'p', 'y', 't', 'h', 'o', 'n']
+lst1.extend(["python"])	#['A', 'B', 'C', 'python']
+
+
+Q. Differences between remove() and pop()
+remove() function -- We can use this function to remove specified item from the list. If the item present multiple times then only first occurrence will be removed.
+pop() function -- we can use pop() function to remove last element of the list. 
+n.pop()==>To remove and return last element of the list. 
+n.pop(index)===>To remove and return element present at specified index.
+lst1=[10,20,30,40]
+print(lst1.remove(10))	#None -> print(lst1) # [20, 30, 40]
+print(lst1.pop()) # 40 --> print(lst1.pop(1))# 20 --> print(lst1) # [10,30]
+
+
+
+Q. len(), count(x), index(x) ---- list=[1,1,1,2,3,2,300,4,1,2,1] 
+print(len(list)) -> 11 
+print(list.count(1)) --> 5  
+print(list.index(300)) --> 6
+
+Q. reverse() ------ lst1.reverse() #[40, 30, 20, 10]
+
+Q. sort() -------
+To use sort() function,In python3 compulsory list should contain only homogeneous elements. otherwise we will get TypeError.
+list=["A",20,30,"B",40,"C"] ---> print(list.sort()) --> TypeError:'<' not supported between instances of 'int' and 'str'
+lst=[20,40,10,30] ---> lst.sort() #[10, 20, 30, 40] --> lst.sort(reverse=True) #[40, 30, 20, 10] --> lst.sort(reverse=False) #[10, 20, 30, 40]
+lst=['D','F','S','H'] -> lst.sort() #['D', 'F', 'H', 'S']
+
+
+Q. Aliasing and Cloning of List objects ---
+x=[20,40,10,30] 
+
+Aliasing --> y = x --> y[1]=400 --> print(x) #[20, 400, 10, 30] --> print(y) #[20, 400, 10, 30].
+The process of giving another reference variable to the existing list is called aliasing.
+
+cloning --> y = x[:] --> y[1]=400 --> print(y) #[20, 400, 10, 30] --> print(x) #[20, 40, 10, 30].
+            y=x.copy() --> y[1]=400 --> print(y) #[20, 400, 10, 30] --> print(x) #[20, 40, 10, 30]
+To overcome this problem we should go for cloning.
+The process of creating exactly duplicate independent object is called cloning. We implement cloning by using slice operator or by using copy() function.
+
+Q. Difference between = operator and copy() function
+= operator meant for aliasing  & copy() function meant for cloning.
+
+
+Q. Operator overloading --> lst1=[10,20,30] & lst2=[1,2,3] --> print(lst1+lst2) #[10, 20, 30, 1, 2, 3]  --> print(lst1*2) #[10, 20, 30, 10, 20, 30]
+   a1=np.array(lst1) & a2=np.array(lst2) --> print(a1+a2) #[11 22 33] --> print(a1*2) #[20 40 60].
+
+Q.When ever we are using relatational operators(<,<=,>,>=) between List objects, only first element comparison will be performed. 
+x=[50,20,30] & y=[40,30,60]
+print(x>y) #True & print(x>=y)	#True -- print(x<y) #False & print(x<=y) #False
+x=["Python"] & y=["Parshu"]
+print(x>y) #True & print(x>=y) #True -- print(x<y) #False & print(x<=y) #False
+
+comparison operators for List objects -- x=["Dog","Cat","Rat"] & y=["Dog","Cat","Rat"] & z=["DOG","CAT","RAT"]
+print(x==y) #True & print(x==z) #False & print(x!=z) #True
+
+
+
+Q. lst=[10,20,30,40]
+print(10 in lst) #True & print(10 not in lst)	#False
+print(50 in lst) ##False & print(50 not in lst)	#True
+
+Q. We can use clear() function to remove all elements of List. list.clear() #[]
+
+
+we are using list in admin.py file.
+#admin.py
+class EmployeeAdmin(admin.ModelAdmin):
+    list_display = ['eno', 'ename', 'esal', 'eadd']
+admin.site.register(Employee, EmployeeAdmin)
+
+
+
+List Comprehensions ------
+It is very easy  of creating list objects from any iterable objects(like list,tuple,dictionary,range etc) based on some condition.
+Syntax : list=[expression for item in list if condition]
+
+
+Q. Iterating through a string
+l=[]                  
+for i in 'python':
+    l.append(i)
+print(l)  # ['p', 'y', 't', 'h', 'o', 'n']  --- Iterating through a string Using for Loop.
+print([i for i in 'python']) #['p', 'y', 't', 'h', 'o', 'n'] --Iterating through a string Using List Comprehension.
+
+
+Q. print([i*i for i in range(1,5)]) #[1, 4, 9, 16]   &    print([i*2 for i in range(1,5)]) #[2, 4, 6, 8]
+
+Q. lst=[10,20,33,55,46,56] --> print([i for i in lst if i%2==0]) #[10, 20, 46, 56]
+
+Q. lst=['pathon','java','HTML','CSS'] --> print([i[0] for i in lst]) #['p', 'j', 'H', 'C']
+
+
+Q. n1=[10,20,30,40] & n2=[30,40,50,60] 
+print([i for i in n1 if i not in n2]) #[10, 20] --- print([i for i in n1 if i in n2]) #[30, 40]
+
+Q. print([i for i in range(1,11) if i%2==0]) #[2, 4, 6, 8, 10]
+
+Q. s = "Python is Easy".split()
+print(s)  # ['Python', 'is', 'Easy']
+print([[i,len(i)] for i in s])  # [['Python', 6], ['is', 2], ['Easy', 4]]
+print([[i.upper(),len(i)] for i in s])  # [['PYTHON', 6], ['IS', 2], ['EASY', 4]]
+
+Q. Remove Spaces From String in Python ----- rstrip(), lstrip(), strip(), using replace, using join.
+s=' hello  python string    '
+print(s.strip()) #hello  python string. 
+print(s.rstrip()) # hello  python string. 
+print(s.lstrip()) #hello  python string  . 
+print(s.replace(" ","")) #hellopythonstring --> remove all white areas from the string.
+print("".join(s.split())) #hellopythonstring --> join() function is used to join the array of strings.
+
+
+Q. Write a program to display unique vowels present in the given word/string?
+s='Python is EEasy'.replace(" ","") #converting sentence into single word.
+l1=['a','e','i','o','u','A','E','I','O','U']
+l2=[]
+for i in s:
+    if i in l1:
+        if i not in l2:
+          l2.append(i) 
+print(l2) #['o', 'i', 'E', 'a']
+
+
+
+
+
+
+
+Tuple -----
+
+Tuple is exactly same as List except that it is immutable.
+Tuple is Read Only version of List.
+If our data is fixed and never changes then we should go for Tuple.
+Insertion Order is preserved -- Duplicates are allowed -- Heterogeneous objects are allowed.
+We can preserve insertion order and we can differentiate duplicate objects by using index. Hence index will play very important role in Tuple also.
+We can represent Tuple elements within Parenthesis and with comma separator.  Parenthesis are optional but recommended to use.
+
+Q. Creation of Tuple ---
+t1=10, --  t1=() -- t1=10,20,30 -- t1=(10,) -- t1=(10,20,30) -- t1=tuple([10,20,30]) -- t=tuple(range(5))
+int --> t1=10 -- t1=(10)
+
+Q. Accessing elements of tuple ---
+t=(10,20,30,40) --> print(t[0])	#10 --> print(t[-1]) #40
+print(t[:]) #(10, 20, 30, 40) -->print(t[::]) #(10, 20, 30, 40) --> print(t[:-1]) #(10, 20, 30) )
+print(t[::-1]) #(40, 30, 20, 10print(t[1:3]) --> #(20, 30) --> print(t[3:1]) #() --> print(t[-1:-4]) #()
+
+Q. t=(10,20,30,40) --> t[1]=200 # TypeError: 'tuple' object does not support item assignment
+
+
+Q. t1=(10,20,30,40,10,10) ---
+print(len(t1)) #6
+print(t1.count(10)) #3 
+print(t1.index(10)) #0
+print(sorted(t1)) # [10, 10, 10, 20, 30, 40] -- print(type(sorted(t1))) #<class 'list'>
+print(sorted(t1,reverse=True)) #[40, 30, 20, 10, 10, 10]  -- print(sorted(t1,reverse=False)) #[10, 10, 10, 20, 30, 40]
+print(min(t1)) #10  -- print(max(t1)) #40
+
+Q. t1=(10,20,30,40) & t2=(50,60,70,80) --> print(t1+t2) #(10, 20, 30, 40, 50, 60, 70, 80) --- print(t1*2) #(10, 20, 30, 40, 10, 20, 30, 40)
+
+Q. tuple packing --> a,b,c=10,20,30 --> t=a,b,c --> print(t) #(10, 20, 30) --><class 'tuple'>
+   tuple Unpacking --> t=(10,20,30,40) --> a,b,c,d=t --> print("a=",a,"b=",b,"c=",c,"d=",d)   #a= 10 b= 20 c= 30 d= 40
+
+Q. Tuple Comprehension is not supported by Python.
+
+Q. Here we are not getting tuple object and we are getting generator object.
+tc=(x*x for x in range(1,5))
+print(tc) #<generator object <genexpr> at 0x000001B656A8EDB0>
+for i in tc:
+    print(i,end=",") #1,4,9,16,
+
+Q. Write a program to take a tuple of numbers from the keyboard and print its sum and average?
+t1=(10,20,30,40)
+print(sum(t1)) #100
+print("Average is ",sum(t1)/len(t1)) #Average is  25.0
+
+
+Q. Differences between List and Tuple 
+List Objects can not used as Keys for Dictionries	because	Keys	should	be Hashable and Immutable.
+Tuple Objects can be used as Keys for Dictionries	because	Keys	should	be Hashable and Immutable.
+
+
+
+
+==================================================================
+
+
+
+set  -----
+
+Q. Where set used in project.
+
+
+
+
+If we want to represent a group of unique values as a single entity then we should go  for set.
+Duplicates are not allowed -- Insertion order is not preserved. But we can sort the elements --Heterogeneous elements are allowed.
+ s1[1]=100 # TypeError:'set' object does not support item assignment
+Set objects are mutable 
+We can apply mathematical operations like union, intersection, difference etc on set objects.
+
+Q. Creation of set Object ---
+s={10,20,30,40} & set(any sequence) & print(set()) #set().
+
+Q. While creating empty set we have to take special care --> Compulsory we should use set() function --> print(set()) #set() <class 'set'>
+s = {} ==>It is treated as dictionary but not empty set. --> print(s) #{}  <class 'dict'>.
+
+Q. Indexing and slicing not allowed for the set & Dict because insertion order is not preserved. s={10,20,30,40} 
+s[1]=200 #'set' object does not support item assignment & print(s[:]) #'set' object is not subscriptable
+
+
+
+Q. What is the difference between add() and update() functions in set?
+add() function can take only one argument, update() function can take any number of arguments but all arguments should be iterable objects.
+Arguments are not individual elements and these are Iterable objects like List, range etc.
+s=set()  
+s.add(10) print(s) #{10} & s.add(10,20) #TypeError:set.add() takes exactly one argument (2 given) & s.update(10) #TypeError:'int' object is not iterable.
+s.update([20,30]) --> print(s) #{10, 20, 30}
+s.update((40,50)) --> print(s) #{40, 10, 50, 20, 30}
+s.update(range(3)) --> print(s) #{0, 1, 2, 40, 10, 50, 20, 30}
+s.update([777]) --> print(s) #{0, 1, 2, 40, 777, 10, 50, 20, 30}
+s.update([11,12],range(200,201)) -->print(s) #{0, 1, 2, 40, 777, 10, 11, 12, 200, 50, 20, 30}
+
+
+Q. s={10,20,30}
+aliasing --> s3=s  --> s3.add(200) --> print(s3) #{200, 10, 20, 30} & print(s) #{200, 10, 20, 30}
+cloning --> s1=s.copy() --> s1.update(range(100,101)) --> print(s1)	#{100, 10, 20, 30} & print(s) #{10, 20, 30}
+s2=s[:] #TypeError:'set' object is not subscriptable
+
+Q. Explain differences between pop(),remove() and discard() functions in Set?
+s={1,2,3,4,5}
+print(s.pop()) #1 --> print(s) #{2, 3, 4, 5} --- it delete random element. In list,it delete last element.
+print(s.remove(3)) #None --> print(s) #{2, 4, 5} --- specified element from the set.
+print(s.discard(2)) #None --> print(s) #{4, 5} --- removes specified element from the set.
+print(s) #{4, 5} --> print(s.clear()) #None & print(s) #set() #emptey set --- remove all elements from the Set.
+
+Q. What is the difference between remove() and discard() functions in Set?
+print(s.remove()) #TypeError: remove() takes exactly one argument (0 given).
+print(s.remove(30)) #KeyError: 30.
+s.discard(30)  #If specified element not present in set then we won't get any error.
+
+
+Q. Mathematical operations on the Set --- x={10,20,30,40} & y={30,40,50,60}
+print(x.union(y)) or  print(x|y) #{40, 10, 50, 20, 60, 30} --> function to return all elements present in both sets.	
+print(x.intersection(y))  or  print(x&y) #{40, 30} --> Returns common elements present in both x and y.
+print(x.difference(y))	or  print(x-y)   #{10, 20} --> returns the elements present in x but not in y.
+print(y.difference(x))	or  print(y-x)	 # {50, 60} --> returns the elements present in y but not in x.
+print(x.symmetric_difference(y))  or  print(x^y)  #{10, 50, 20, 60} --> Returns elements present in either x or y but not in both.
+				
+Q. Set comprehension is possible
+print({x*x for x in range(5)})	# {0, 1, 4, 9, 16}
+print({2**x for x in range(2,10,2)}) #{16, 256, 64, 4}
+
+Q. Write a program to eliminate duplicates present in the list?
+l=[10,20,30,10,20,30]  --> print(set(l)) #{10, 20, 30}
+
+l1=[]
+for i in l:
+    if i not in l1:
+        l1.append(i)
+print(l1)  #[10, 20, 30]
+
+Q. Write a program to print different vowels present in the given word?
+s='python is EEasy'.replace(" ","")
+s1=set(s)
+print(s1) #{'n', 'h', 't', 'i', 'a', 'y', 'p', 'E', 's', 'o'}
+v1={'a','e','i','o','u','A','E','I','O','U'}
+print(s1&v1) #{'o', 'E', 'i', 'a'}
+
+
+
+
+Dictionary --------------
+
+Q. Where dictionary used in project.
+we are used dictionary in serialization(converting dictionary into json object).
+
+- We can use List, Tuple and Set to represent a group of individual objects as a single entity.
+- If we want to represent a group of objects as key-value pairs then we should go for Dictionary.
+- Duplicate keys are not allowed but values can be duplicated. 
+- Hetrogeneous objects are allowed for both key and values. 
+- Dictionaries are mutable Dictionaries are dynamic
+- insertion order is not preserved. indexing and slicing concepts are not applicable.
+
+Q. How to create Dictionary?
+d={}  or  d=dict() -->empty dictionary --> d[100]="durga" d[200]="ravi" d[300]="shiva" -->print(d) #{100:'durga', 200:'ravi', 300:'shiva'}
+d={100:'durga' ,200:'ravi', 300:'shiva'} -- d={key:value, key:value}
+d[key]=value 	to update dictionaries
+d=dict([(100,"durga"),(200,"shiva"),(300,"ravi")])  It creates dictionary with the given list of tuple elements
+
+Q. How to access data from the dictionary?
+d={100:'durga' ,200:'ravi', 300:'shiva'}
+print(d[100]) #durga -- We can access data by using keys.
+print(d[400]) #KeyError:400 -- If the specified key is not available then we will get KeyError 
+
+Q. To check key is already available or not
+if 200 in d:
+    print(d[200])  # ravi
+
+Q. Write a program to enter name and percentage marks in a dictionary and display information on the screen.
+n=int(input("Enter number of students:"))
+d={}
+i=1
+while i<=n:
+    name=input("Enter Name of Student:")
+    marks=int(input("Enter marks of student:"))
+    d[name]=marks
+    i=i+1
+print(d) #{'parshu': 99, 'amol': 98}
+
+Q. How to update dictionaries?
+d={"One" :1, "Two" : 2, "Three" : 3}
+d["Four"]=4 --> print(d) #{'One': 1, 'Two': 2, 'Three': 3, 'Four': 4} --- If the key is not available then a new entry will be added
+d["Three"]=33 --> print(d) #{'One': 1, 'Two': 2, 'Three': 33, 'Four': 4} --- If the key is already available then old value will be replaced with new value.
+del d["One"] --> print(d) #{'Two': 2, 'Three': 33, 'Four': 4} --- It deletes entry associated with the specified key.
+d.clear() --> print(d) #{} ---To remove all entries from the dictionary
+del d --> print(d) #NameError: name 'd' is not defined --- To delete total dictionary.
+
+
+Q. Important functions of dictionary -----------
+
+d.get(key,defaultvalue) ---> If the key is available then returns the corresponding value otherwise returns default value.
+
+d={"One" :1, "Two" : 2, "Three" : 3}
+print(len(d)) #3
+print(d["One"])	#1
+print(d["one"]) #KeyError: 'one'
+print(d.get("One"))	#1    ---- If the key is available then returns the corresponding value, 
+print(d.get("one"))	#None      otherwise returns None. It wont raise any error.
+print(d.get("One",1)) #1
+print(d.get("one",100))	#100
+print(d) #{'One': 1, 'Two': 2, 'Three': 3}
+d={'a':1,'b':2,'c':3}
+print(d.get('d','key not available'))	# key not available
+
+
+
+- d.popitem() It removes an arbitrary item(key-value) from the dictionaty and returns it.
+- d.keys() It returns all keys associated with dictionary
+- d.values() It returns all values	associated with the dictionary
+- d.items() It returns list of tuples representing key-value pairs
+- d.copy() To create exactly duplicate dictionary(cloned copy)
+- d.setdefault(k,v)  If the key is already available then this function returns the corresponding value.
+- If the key is not available then the specified key-value will be added as new item to the dictionary.
+- d.update(x) All items present in the dictionary x will be added to dictionary d
+
+d={"One" : 1, "Two" : 2, "Three" : 3, "Four" : 4}
+print(d.pop("Two")) #2 --> print(d) #{'One': 1, 'Three': 3, 'Four': 4} #d.pop(key) It removes the entry associated with the specified key and returns the corresponding value.
+
+print(d.popitem()) #('Four', 4)  #d.popitem() It removes an arbitrary item(key-value) from the dictionaty and returns it.
+print(d) #{'One': 1, 'Three': 3}
+print(d.keys()) #dict_keys(['One', 'Three'])
+for k in d.keys():
+    print(k,end=",") #One,Three,
+print('\n')
+for v in d.values():
+    print(v,end=",") #1,3,
+print('\n')
+for k,v in d.items():
+    print(k,'-',v,end=",")	#One - 1,Three - 3,
+
+
+
+d1=d.copy()
+d1["One"]=11
+print(d1) # {'One': 11, 'Three': 3}
+print(d) #{'One': 1, 'Three': 3}
+d2=d
+d2["One"]=11
+print(d2) #{'One': 11, 'Three': 3}
+print(d) #{'One': 11, 'Three': 3}
+d3=d[::] #TypeError: unhashable type: 'slice'
+
+
+
+Q. Write a program to take dictionary from the keyboard and print the sum of values?
+d={'One' : 1, "Two" : 2, "Three" : 3}
+print(sum(d.values())) #6
+
+Q. Write a program to find number of occurrences of each letter present in the given string?
+s="mississi ppi".replace(" ","")
+d={}
+for x in s:
+    d[x]=d.get(x,0)+1
+for k,v in d.items():
+    print(k,"occured",v,"times",end="--")  #m occured 1 times--i occured 4 times--s occured 4 times--p occured 2 times--
+
+
+Q. Write a program to find number of occurrences of each vowel present in the given string?
+s="mississi ppi is a river".replace(" ","")
+v={'a','e','i','o','u'}
+d={}
+for x in s:
+    if x in v:
+     d[x]=d.get(x,0)+1
+for k,v in d.items():
+    print(k,"occured",v,"times",end=",") #i occured 6 times,a occured 1 times,e occured 1 times,
+
+
+Q. Dictionary Comprehension 
+Comprehension concept applicable for dictionaries also.
+print({x*x for x in range(1,4)})# {1, 4, 9}
+print({x*2 for x in range(1,4)})# {2, 4, 6}
+print({i for i in range(1,11) if i%2==0}) #{2, 4, 6, 8, 10}
+
+
+
+
+================================================================================
+
+
+
+FUNCTIONS ------------
+
+- If a group of statements is repeatedly required, We have to define these statements as a single unit and  
+ we can call that unit any number of times based on our requirement without rewriting. This unit is nothing but function.
+- The main advantage of functions is code Reusability.
+-Python supports 2 types of functions
+ Built in Functions: (id(), type(), input(), eval())
+ User Defined Functions: The functions which are developed by programmer explicitly according to business requirements
+- return Statement: Function can take input values as parameters and executes business logic, and returns output to the caller with return statement.
+
+Q.def wish():
+    print("hello")
+ wish()	# hello
+
+Q. def wish(name):
+     print("hello",name,"GM")
+  wish() # TypeError: wish() missing 1 required positional argument: 'name'
+  wish("parshu")	# hello parshu GM
+
+Q. def sqaure(number):
+    print("Sqaure is ",number*number)
+  sqaure(5)		# Sqaure is  25
+
+Q. Factorial program
+def fact(n):
+    result = 1
+    while n>=1:
+        result=result*n
+        n=n-1
+    print("factorial of number is:",result)
+fact(5)	#factorial of number is: 120
+
+
+Types of arguments ------
+- a,b are formal arguments where as 10,20 are actual arguments.
+- There are 4 types are actual arguments are allowed in Python --- positional arguments,keyword arguments,default arguments,Variable length arguments.
+- positional argument follows keyword argument --- wish("parshuram",msg="GM") #valid --- wish(name="parshuram","GM") #invalid.
+-non-default argument follows default argument.
+
+
+positional arguments ---
+- These are the arguments passed to function in correct positional order.
+- The number of arguments and position of arguments must be matched.
+- If we change the order then result may be changed.
+- If we change the number of arguments then we will get error.
+- def sub(x,y):
+    print(x-y)
+  sub(10,20) #-10
+  sub(20,10) #10
+
+keyword arguments ---
+- We can pass argument values by keyword i.e by parameter name.
+- Here the order of arguments is not important but number of arguments must be matched.
+- def wish(name,msg):
+    print("hello",name,msg)
+ wish(name="parshuram",msg="GM")# hello parshuram GM
+ wish(msg="GM",name="parshuram")# hello parshuram GM
+
+
+default arguments ---
+-Sometimes we can provide default values for our positional arguments.
+-If we are not passing any name then only default value will be considered
+-After default arguments we should not take non default arguments
+-non-default argument follows default argument
+
+def wish(name="Guest"):
+    print("hello",name,"GM")
+wish()	# hello Guest GM
+wish("parshuram")#hello parshuram GM
+
+def wish(name="Guest",msg="Good Morning"): ===>Valid def wish(name,msg="Good Morning"): ===>Valid
+def wish(name="Guest",msg): ==>Invalid -- SyntaxError: non-default argument follows default argument
+
+
+Variable length arguments ---
+- Sometimes we can pass variable number of arguments to our function.
+- We can declare a variable length argument with * symbol as follows  def f1(*n):
+- We can call this function by passing any number of arguments including zero number. Internally all these values represented in the form of tuple.
+- We can mix variable length arguments with positional arguments.
+- After variable length argument, if we are taking any other arguments then we should provide values as keyword arguments.
+
+Q. def sum(*n):
+    total=0
+    for i in n:
+        total=total+i
+    print("sum is:",total) 
+ sum(10,20,30) #sum is: 60 & sum() #sum is: 0 & sum(10,20) # sum is: 30.
+
+Q. We can mix variable length arguments with positional arguments.
+def f1(n1,*s):
+    print(n1)
+    for i in s:
+        print(i,end=",")
+f1("python",10,20,30)
+python
+10,20,30,
+
+Q. After variable length argument, if we are taking any other arguments then we should provide values as keyword arguments.
+def f1(*s,n1):
+        for i in s:
+                print(i,end=",")
+        print(n1)
+f1("python",10,20,30)#f1() missing 1 required keyword-only argument: 'n1'
+f1("python",10,20,n1=30)	#python,10,20,30
+
+Q. We can declare key word variable length arguments also. For this we have to use **.
+def  f1(**n) --> We can call this function by passing any number of keyword arguments. Internally these keyword arguments will be stored inside a dictionary.
+def f1(**kwarg):
+        for k,v in kwarg.items():
+                print(k,"=",v)
+f1(n1=10,n2=20)
+f1(name="parshu",marks=100)
+n1 = 10 
+n2 = 20
+name = parshu
+marks = 100
+
+Q. 
+def f(a1,a2,a3=4,a4=8):
+ print(a1,a2,a3,a4)
+f(3,2) #3 2 4 8
+f(10,20,30,40) #10 20 30 40
+f(25,50,a4=100) #25 50 4 100
+f(a4=2,a1=3,a2=4) #3 4 4 2
+#f() #TypeError: f() missing 2 required positional arguments: 'a1' and 'a2'
+#f(a3=10,a4=20,30,40)  #SyntaxError: positional argument follows keyword argument
+
+
+Types of Variables -------- Global Variables, Local Variables.
+
+Global Variables --- declaring outside of function & available to all functions of that module.
+
+Local Variables --- declared inside a function & available only for the function in which we declared it.i.e from outside of function we cannot access.
+
+def f1():
+        a = 10
+        print(a)
+def f2():
+        print(a)
+f1()#10
+f2()#name 'a' is not defined
+
+
+global keyword --- 
+-To declare global variable inside function.
+
+a=10
+def f1():
+        a = 777
+        print(a)
+def f2():
+        print(a)
+f1() #777
+f2() #10
+
+a=10
+def f1():
+        global a
+        a = 777
+        print(a)
+def f2():
+        print(a)
+f1() #777
+f2() #777
+
+
+def f1():
+        global a
+        a = 10
+        print(a)
+def f2():
+        print(a)
+f1() #10
+f2() #10
+
+-- If global variable and local variable having the same name then we can access global variable inside a function as follows
+a=10
+def f1():
+        a = 10
+print(a)			#10
+print(globals()['a'])	#10
+
+
+Recursive Functions --- 
+- A function that calls itself is known as Recursive Function. We can reduce length of the code and improves readability.
+- factorial(n)= n*factorial(n-1)
+
+Q. Write a Python Function to find factorial of given number with recursion.
+def factorial(n):
+    if n==0:
+        result=1
+    else:
+        result = n * factorial(n-1)
+    return result
+print(factorial(5)) #120
+
+
+Anonymous Functions : (lambda Function) --- 
+- a function without any name.
+- The main purpose of anonymous function is just for instant use(i.e for one time usage)
+
+Normal Function --- We can define by using def keyword. 
+def squareIt(n):
+      return n*n
+
+lambda Function ---
+- lambda argument_list : expression
+- Lambda Function internally returns expression value and we are not required to write return statement explicitly.
+- Sometimes we can pass function as argument to higher order function like map(), reduce(), filter.
+- s = lambda n : n*n --> print(s(4)) # 16
+- s = lambda n : n%2==0 --> print(s(4)) #True
+- sum = lambda a,b:a+b --> print(sum(10,20)) #30
+- bigger_number=lambda a,b:a if a>b else b --> print(bigger_number(56473,57676)) #57676
+- print(list(map(lambda n:n*2,range(3)))) # [0, 2, 4]
+
+
+filter() function ----
+- We can use filter() function to filter values from the given sequence based on some condition.
+- filter(function,sequence)
+- print(list(filter(lambda n : n%2==0, range(10))))# [0, 2, 4, 6, 8]
+
+map() function  ---
+- For every element present in the given sequence, apply some functionality and generate new element with the required modification. 
+- map(function,sequence)
+- For every element present in the list perform double and generate new list of doubles.
+- The function can be applied on each element of sequence and generates new sequence.
+- print(list(map(lambda n:n*n,range(5)))) #[0, 1, 4, 9, 16]
+- print(list(map(lambda x,y : x*y, [10,40,50],[20,30,60])))  #[200, 1200, 3000]
+- print(list(map(lambda n : n%2==0, range(1,5) ))) #[False, True, False, True]
+
+
+reduce() function --- 
+- reduce() function reduces sequence of elements into a single element by applying the specified function.
+- reduce(function,sequence)
+- reduce() function present in functools module and hence we should write import statement.
+- print(reduce(lambda x,y:x+y,range(101))) #5050
+- In Python every thing is treated as object. Even functions also internally treated as objects only.
+
+Q. Factorial Program 
+from functools import *
+def factorial(n):
+    print(reduce(lambda x,y:x*y,range(1,n+1)))
+factorial(5)	#120
+
+
+Function Aliasing --- 
+- For the existing function we can give another name.
+- If we delete one name still we can access that function by using alias name
+- def wish(name):
+    print("hello",name)
+ greeting=wish
+ wish("parshu") #hello parshu  & print(id(wish)) # 2322336637568.
+ greeting("parshu") #hello parshu & print(id(greeting))	# 2322336637568.
+
+del wish --> wish("parshu") #NameError:name 'wish' is not defined --> greeting("parshu") #hello parshu
+
+Nested Functions -----
+- We can declare a function inside another function.
+
+- def outer():
+ 	print("outer started")
+ 	def inner():
+  		print("inner started")
+ 	print("outer calling to inner")
+ 	return inner()
+ outer()	 #outer started
+          outer calling to inner
+          inner started
+ inner()	 #NameError: name 'inner' is not defined
+
+ f1=outer() --- function we are providing another name f1(function aliasing). which returns inner function.For that inner function() we are providing another name f1.
+ f1=outer() #outer started
+	    outer calling to inner
+            inner started
+ f1() #'NoneType' object is not callable.
+
+
+
+
+Decorators -----
+- Decorator is a function which can take a function as argument and extend its functionality and returns modified function with extended functionality.
+- The main objective of decorator functions is we can extend the functionality of existing functions without modifies that function.
+- def f1(func):
+    def inner(name):
+        if name=="sunny":
+            print("sunny")
+        else:
+            func(name)
+    return inner
+@f1
+def wish(name):
+    print("hello",name,"GM")
+
+wish("parshu")	# hello parshu GM
+wish("sunny")	# hello sunny bad morning
+
+Decorator Chaining: We can define multiple decorators for the same function and all these decorators will form Decorator Chaining.
+
+
+
+
+
+
+
+
+
+Modules ---
+
+random module random(), randint(x,y), uniform(x,y), choice(), randrange(1,11,2)
+A group of functions, variables and classes saved to a file, which is nothing but module.  Every Python file (.py) acts as a module.
+
+from durgamath import *     import all members of a module
+import modulename
+import module1,module2,module3
+ import module1 as m
+import module1 as m1,module2 as m2,module3 
+ from module import member
+from module import member1,member2,memebr3
+ from module import memeber1 as x
+
+member aliasing:
+from math import x as y,add as sum
+print(y)
+sum(10,20)
+Once we defined as alias name, we should use alias name only and we should not use  original name
+
+dir() ===>To list out all members of current module 
+dir(moduleName)==>To list out all members of specified module
+
+math module
+from math import *
+print(sqrt(4))	#2.0
+print(ceil(10.1))	#11
+print(floor(10.1))	#10
+print(fabs(-10.6)) #10.6 #Return the absolute value of the float x
+print(fabs(-10.6))	#10.6
+
+import math
+help(math)
+
+random module
+This module defines several functions to generate random numbers.
+random() function always generate float value between 0 and 1(not inclusive)
+randint(1,10) to generate random integer bw two given numbers(inclusive)
+uniform(1,10) to generate random float values bw two given numbers(not inclusive)
+randrange([start],stop,[step]) 
+randrange(10)-->generates a random number from 0 to 9 
+randrange(1,11)-->generates a number from 1 to 10 
+randrange(1,11,2)-->generates a number from 1,3,5,7,9
+choice() It will return a random object from the given list or tuple.
+
+
+from random import *
+for i in range(2):
+    print(random())	        #0.15293152149244482
+0.8422011482064246
+
+for i in range(5):
+    print(randint(1,10),end=",")		# 6,4,10,8,2,
+
+
+for i in range(3):
+    print(uniform(1,10),end=",")#3.5802179188,2.88214064442,9.0777387465
+
+for i in range(3):
+    print(randrange(10),end=",")	# 4,0,6,
+    print(randrange(1,5), end=",") 	#4,2,4,
+    print(randrange(1,11,2), end=",") 	#9,5,1,
+
+
+list=["Sunny","Bunny","Chinny","Vinny","pinny"]
+for i in range(4):
+    print(choice(list))
+Chinny
+Chinny
+Sunny
+Bunny
+
+
+					
+Packages
+
+It is an encapsulation mechanism to group related modules into a single unit.
+package is nothing but folder or directory which represents collection of Python modules.
+Any folder or directory contains__init__.py file, is considered as a Python package. This file can be empty.
+A package can contains sub packages also.
+
+The main advantages of package statement are:
+We can resolve naming conflicts
+We can identify our components uniquely
+It improves modularity of the application
+
+
+
+
+The Special variable __name__  ---------------
+
+main define entry point of our code. start execution from this line.
+This variable stores information regarding whether the program is executed as an individual program or as a module.
+If the program executed as an individual program then the value of this variable is __main__.
+If the program executed as a module from some other program then the value of this variable is the name of module where it is defined.
+#test1.py
+def add(n1,n2):
+    print(n1+n2)
+print(__name__)
+if __name__ == '__main__':
+add(10,20)		#__main__
+			30
+#test2.py
+import test
+test.add(40,50)	#test1
+		90
+
+
+
+
+
+
+====================================================================
+
+
+
+File Handling 
+1) 7 modes('r','w','a','r+','w+','a+','x'), 
+   f.name, f.mode, f.readable(),f.writable(), f.close,
+   write(str), writelines(list of lines), f.read(), f.read(n),    f.readline(), f.readlines(), f.tell(), f.seek(6), 
+   os.path.isfile(fname), sys.exit(0),
+   csv module with open("emp.csv","w",newline='') as f:,  
+2) we have to store our data permanently for future purpose. For this requirement we should go for files. Files are very common permanent storage areas to 
+   store our data. There are 2 types of files
+   Text Files: we can use text files to store character data abc.txt
+    Binary Files: we can use binary files to store binary data like images, video files, audio files etc...
+    f = open(filename, mode)
+
+3) 7 allowed modes in Python
+r open an existing file for read operation. The file pointer is positioned at the beginning of the file. If the specified file does not exist then we will 
+  get FileNotFoundError. This is default mode.
+W open an existing file for write operation. If the file already contains some data then it will be overridden. If the specified file is not already 
+  available then this mode will create that file.
+a open an existing file for append operation. It won't override existing data. If the specified file is not already available then this mode will create a 
+  new file.
+r+ To read and write data into the file. The previous data in the file will not be deleted. The file pointer is placed at the beginning of the file.
+w+ To write and read data. It will override existing data.
+a+ To append and read data from the file.It wont override existing data.
+x To open a file in exclusive creation mode for write operation. If the file already exists then we will get FileExistsError.
+All the above modes are applicable for text files. If the above modes suffixed with 'b' then these represents for binary files.
+Eg: rb,wb,ab,r+b,w+b,a+b,xb	
+f = open("abc.txt","w")
+After completing our operations on the file, it is highly recommended to close the file. For this we have to use close() function. 
+f.close()
+
+4) Once we opend a file and we got file object,we can get various details related to that file by using its properties.
+   while writing data by using write() methods, compulsory we have to provide line seperator(\n),otherwise total data should be written to a single line.
+  
+The with statement can be used while opening a file. We can use this to group file operation statements within a block.
+The advantage of with statement is it will take care closing of file,after completing all operations automatically even in the case of exceptions also, and we are not required to close explicitly.
+with open("abc.txt","w") as f:
+
+tell(): We can use tell() method to return current position of the cursor(file pointer) from beginning of the file. The position(index) of first character in files is zero just like string index.
+seek():  We can use seek() method to move cursor(file pointer) to specified location. 
+f.seek(offset, fromwhere) offset represents the number of positions (from where) are 0 From beginning of file(default value)
+write(str) 
+writelines(list of lines)
+We can read character data from text file by using the following read methods.
+read() To read total data from the file
+read(n)  To read 'n' characters from the file 
+readline() To read only one line 
+readlines() To read all lines into a list
+
+
+f = open("abc.txt","w")	
+print(f.name)	# abc.txt
+print(f.mode)	#w
+print(f.readable())	#False
+print(f.writable())	#True
+print(f.close)	#False
+f.close()
+print(f.close)	#True
+
+f=open("abc.txt","w")
+f.write("parshu")
+f.write("ram\n")
+f.write("shivsing")
+f.write("patil")
+abc.txt		# parshuram
+		  shivsingpatil
+
+f = open("abc.txt","w")
+list = ["sunny\n","bunny\n","vinny\n","chinny"]
+f.writelines(list)
+sunny
+bunny
+vinny
+chinny
+
+f = open("abc.txt","r")
+data = f.read()
+print(data)
+f.close()
+sunny
+bunny
+vinny
+chinny
+data=f.read(10)	# sunny
+                  bunn
+data = f.readline()	# sunny
+data = f.readlines()	#['sunny\n', 'bunny\n', 'vinny\n', 'chinny']
+
+f = open("abc.txt","r+")
+print("curser position:",f.tell())		# curser position: 0
+print(f.read(10))				# sunny bunn
+print("curser position:",f.tell())		#curser position: 11
+f.seek(6)
+print("curser position:",f.tell())		# curser position: 6
+f.write("gunny")
+print("curser position:",f.tell())		# curser position: 11
+print(f.read())					# y vinny chinny
+qprint("curser position:",f.tell())		# curser position: 27
+How to check a particular file exists or not? os.path.isfile(fname)
+sys.exit(0) ===>To exit system without executing rest of the program.
+argument represents status code . 0 means normal termination and it is the default value.
+
+Program to read image file and write to a new image file?
+f1 = open("parshu.jpg","rb")
+f2 = open("newpic.jpg","wb")
+bytes = f1.read()
+f2.write(bytes)
+print(bytes)
+ab\xa8\xbe\x99o{\x04\x9ax-\xf6\x85\x80y\x8a\xc8s\xe5\x9d\xc0\xed\xc9?\x9f\xfaf\xa5\xe2o\x85\x1a\xd6\xa7\xe0\xff\x00\.......
+
+Handling csv files:  CSV==>Comma seperated values
+Python provides csv module to handle csv files.
+with open("emp.csv","w",newline='') as f:
+If we are not using newline attribute then in the csv file blank lines will be included between data. To prevent these blank lines, newline attribute is required in Python-3.
+
+Zipping and Unzipping Files
+It is very common requirement to zip and unzip files. 
+The main advantages are: To improve memory utilization, We can reduce transport time, We can improve performance.
+To perform zip and unzip operations, Python contains one in-built  module zipfile . This module contains a class : ZipFile
+
+To create Zip file:
+We have to create ZipFile class object with name of the zip file, mode and constant ZIP_DEFLATED. This constant represents we are creating zip file.
+f = ZipFile("files.zip","w","ZIP_DEFLATED")
+Once we create ZipFile object, we can add files by using write() method.
+f.write(filename)
+
+To perform unzip operation:
+We have to create ZipFile object as follows
+f = ZipFile("files.zip","r",ZIP_STORED)
+ZIP_STORED represents unzip operation. This is default value and hence we are not required to specify.
+Once we created ZipFile object for unzip operation,we can get all file names present in that zip file by using namelist()  method.
+names = f.namelist()
+
+
+
+==================================================================================
+
+
+
+Working with Directories -------------
+
+import os
+os.getcwd() #current working directory  
+os.mkdir("mysub") #To create a sub directory in the current working directory.
+os.mkdir("mysub/mysub2") #mysub2 directory created inside mysub dir.
+os.makedirs("sub1/sub2/sub3") # sub1 and in that sub2 and in that sub3 directories created
+os.rmdir("mysub/mysub2") # mysub2 directory deleted
+os.removedirs("sub1/sub2/sub3") # All 3 directories sub1,sub2 and sub3 removed
+os.rename("mysub","newdir") # mysub directory renamed to newdir
+print(os.listdir(".")) #os module provides listdir() to list out the contents of the specified directory. It won't display the contents of sub directory.
+
+If we want the contents of a directory including sub directories then we should go for walk() function.
+To display all contents of Current working directory including sub directories:
+import os
+for dirpath,dirnames,filenames in os.walk('.'):
+    print("directory path:",dirpath)
+    print("directories names:",dirnames)
+    print("filename:",filenames)
+    print()
+
+To display contents of particular directory,we have to provide that directory name as argument to walk() function.
+os.walk("directoryname")
+os.stat("abc.txt") # We can get statistics of a file like size, last accessed time,last modified time etc by using stat() function of os module.
+
+Q. What is the difference between listdir() and walk() functions?
+In listdir() get contents of specified directory but not sub directory contents. 
+In walk() function we will get contents of specified directory and its sub directories also.
+
+
+
+Pickling and Unpickling of Objects -----
+
+The process of writing state of object to the file is called pickling. pickle.dump(object,file).
+The process of reading state of an object from the file is called unpickling.obj=pickle.load(file).
+Writing and Reading State of object by using pickle Module:
+import pickle
+from pickle import *
+class employee:
+    def __init__(self,ename,esal):
+        self.ename=ename
+        self.esal=esal
+    def display(self):
+        print(self.ename,"\t",self.esal)
+e = employee("pasrhuram",100000)
+with open('abc.dat','wb')as f:
+    pickle.dump(e,f)
+with open('abc.dat','rb')as f:
+    obj=pickle.load(f)
+    obj.display()	#pasrhuram 	 100000
+
+
+
+
+
+
+
+================================================================================
+
+
+
+Exception Handling ----------------
+
+
+In any programming language there are 2 types of errors are possible.
+Syntax Errors: occurs because of invalid syntax. Programmer is responsible to correct these syntax errors.
+Runtime Errors: Also known as exceptions.
+While executing the program if something goes wrong because of end user input or programming logic or memory problems etc then we will get Runtime Errors.
+Eg: print(10/0) ==>ZeroDivisionError: division by zero
+print(10/"ten") ==>TypeError: unsupported operand type(s) for /: 'int' and 'str' x=int(input("Enter Number:"))
+print(x)	
+D:\Python_classes>py test.py
+Enter Number:ten
+ValueError: invalid literal for int() with base 10: 'ten'
+Note: Exception Handling concept applicable for Runtime Errors but not for syntax errors
+
+What is Exception
+An unwanted and unexpected event that disturbs normal flow of program is called exception.
+ZeroDivisionError 
+TypeError 
+ValueError 
+FileNotFoundError 
+EOFError 
+SleepingError 
+TyrePuncturedError
+
+What is the purpose of Exception Handling?
+The main objective of exception handling is Graceful Termination of the program.
+Exception handling does not mean repairing exception. We have to define alternative way to continue rest of the program normally.
+Ex:
+For example our programming requirement is reading data from remote file locating at  London. At runtime if london file is not available then the program should not be terminated abnormally. We have to provide local file to continue rest of the program normally. This way of defining alternative is nothing but exception handling.
+
+Default Exception Handing in Python
+Every exception in Python is an object. For every exception type the corresponding classes are available.
+Whevever an exception occurs PVM will create the corresponding exception object and will check for handling code. If handling code is not available then Python interpreter terminates the program abnormally and prints corresponding exception information to the console.
+The rest of the program won't be executed.
+
+Customized Exception Handling by using try-except
+It is highly recommended to handle exceptions.
+The code which raise exception is called risky code and we have to take risky code inside try block. The corresponding handling code we have to take inside except block
+
+try:
+Risky Code
+ except XXX:
+Handling code/Alternative Code
+
+print('hello')
+try:
+    print(10/0)
+except:
+    print(10/2)
+print('Hi')
+hello
+5.0
+Hi
+
+
+try:
+    x = int(input("Enter the first number:"))
+    y = int(input("Enter the second number:"))
+    d = x / y
+except ValueError:
+    print("please provide int value only")
+    print("Please enter now:")
+    try:
+        x = int(input("Enter the first number:"))
+        y = int(input("Enter the second number:"))
+        d = x / y
+    except:
+        print("Please dont enter now")
+    else:
+        print(d)
+except ZeroDivisionError:
+    print("Can't Divide with Zero”)
+
+except ModuleNotFoundError:
+    print("Please install given lib")
+except ImportError:
+    print("This is general class for handing")
+except:
+    print("Default Except:Plz provide valid input only ")
+else:
+    print(d)
+print("Successfull1y completed....")
+
+Control Flow in try-	:
+try:
+stmt-1 
+stmt-2 
+stmt-3
+except XXX:
+stmt-4 
+stmt-5
+
+case-1: If there is no exception 1,2,3,5 and Normal Termination
+case-2: If an exception raised at stmt-2 and corresponding except block matched
+1,4,5 Normal Termination
+case-3: If an exception raised at stmt-2 and corresponding except block not matched 1, Abnormal Termination
+case-4: If an exception raised at stmt-4 or at stmt-5 then it is always abnormal termination.
+
+Conclusions:
+within the try block if anywhere exception raised then rest of the try block wont be executed even though we handled that exception. Hence we have to take only risky code inside try block and length of the try block should be as less as possible.
+In addition to try block, there may be a chance of raising exceptions inside except and finally blocks also.
+If any statement which is not part of try block raises an exception then it is always abnormal termination.
+
+try:
+    x = int(input("Enter the first number:"))
+    y = int(input("Enter the second number:"))
+    print(x / y)
+except ArithmeticError:
+    print('ArithmeticError')
+except ZeroDivisionError:
+    print('ZeroDivisionError')
+Enter the first number:10
+Enter the second number:0
+ArithmeticError
+
+Single except block that can handle multiple exceptions:
+except (Exception1,Exception2,exception3,..):	or
+except (Exception1,Exception2,exception3,..) as msg :
+Parenthesis are mandatory and this group of exceptions internally considered as tuple.
+
+try:
+    x = int(input("Enter the first number:"))
+    y = int(input("Enter the second number:"))
+    print(x / y)
+except (ZeroDivisionError,ValueError) as msg:
+    print("Plz Provide valid numbers only and problem is: ", msg)
+Enter the first number:10
+Enter the second number:0
+Plz Provide valid numbers only and problem is:  division by zero
+
+
+Default except block
+We can use default except block to handle any type of exceptions.
+In default except block generally we can print normal error messages.
+If try with multiple except blocks available then default except block should be last, otherwise we will get SyntaxError.
+
+The following are various possible combinations of except blocks
+1. except ZeroDivisionError:
+2. except ZeroDivisionError as msg:
+3. except (ZeroDivisionError,ValueError) :
+4. except (ZeroDivisionError,ValueError) as msg:
+5. except :
+try:
+    x = int(input("Enter the first number:"))
+    y = int(input("Enter the second number:"))
+    print(x / y)
+except ZeroDivisionError:
+    print("ZeroDivisionError:Can't divide with zero")
+except:
+    print("Default Except:Plz provide valid input only")
+
+finally block
+1.It is not recommended to maintain clean up code inside try block because there is no guarantee for the execution of every statement inside try block always.
+2.It is not recommended to maintain clean up code inside except block, because if there is no exception then except block won't be executed
+3. Hence we required some place to maintain clean up code which should be executed always irrespective of whether exception raised or not raised and whether exception handled or not handled. Such type of best place is nothing but finally block.
+Hence the main purpose of finally block is to maintain clean up code.
+
+try:
+	Risky Code
+except:
+	Handling Code 
+finally:
+	Cleanup code
+
+The specialty of finally block is it will be executed always whether exception raised or not raised and whether exception handled or not handled.
+
+*** Note
+There is only one situation where finally block won't be executed ie whenever we are using os._exit(0) function.
+Whenever we are using os._exit(0) function then Python Virtual Machine itself will be  shutdown. In this particular case finally won't be executed.
+os._exit(0)
+where 0 represents status code and it indicates normal termination .
+try:
+    print('try')
+except:
+    print('except')
+finally:
+    print('finally')
+try
+finally
+
+try:
+    print('try')
+    print(10/0)
+except ZeroDivisionError:
+    print('except')
+finally:
+    print('finally')
+try
+except
+finally
+
+try:
+    print('try')
+    print(10/0)
+except NameError:
+    print('except')
+finally:
+    print('finally')
+try
+finally
+ZeroDivisionError: division by zero
+
+import os
+try:
+    print('try')
+    os._exit(0)
+except NameError:
+    print('except')
+finally:
+    print('finally')
+try
+
+os._exit(0)
+where 0 represents status code and it indicates normal termination There are multiple status codes are possible.
+
+Control flow in try-except-finally:
+try:
+stmt-1 
+stmt-2
+ stmt-3
+except:
+stmt-4
+finally:
+	stmt-5
+stmt-6
+	
+Case-1: If there is no exception 1,2,3,5,6 Normal Termination
+Case-2: If an exception raised at stmt2 and the corresponding except block matched 1,4,5,6 Normal Termination
+Case-3: If an exception raised at stmt2 but the corresponding except block not matched 1,5 Abnormal Termination
+Case-4:If an exception raised at stmt4 then it is always abnormal termination but before that finally block will be executed.
+Case-5: If an exception raised at stmt-5 or at stmt-6 then it is always abnormal termination
+
+
+Nested try-except-finally blocks:
+We can take try-except-finally blocks inside try or except or finally blocks.i.e nesting of try- except-finally is possible.
+try:
+    print('outer try block')
+    try:
+        print('inner try block')
+        print(10/0)
+    except ZeroDivisionError:
+        print('inner except block')
+    finally:
+        print('inner finally block')
+except:
+    print('outer except block')
+finally:
+    print('outer finally block')
+outer try block
+inner try block
+inner except block
+inner finally block
+outer finally block
+
+Control flow in nested try-except-finally:
+try:
+	stmt-1
+	stmt-2
+	stmt-3
+	try:
+		stmt-4
+		stmt-5
+		stmt-6
+	except:
+		stmt-7
+	finally:
+		stmt-8
+	stmt-9
+except:
+	stmt-10
+finally:
+	stmt-11
+stmt-12
+
+case-1: If there is no exception 1,2,3,4,5,6,8,9,11,12 Normal Termination
+case-2: If an exception raised at stmt-2 and the corresponding except block matched 1,10,11,12 Normal Termination
+case-3: If an exceptiion raised at stmt-2 and the corresponding except block not matched 1,11,Abnormal Termination
+case-4: If an exception raised at stmt-5 and inner except block matched 1,2,3,4,7,8,9,11,12 Normal Termination
+case-5: If an exception raised at stmt-5 and inner except block not matched but outer except block matched
+1,2,3,4,8,10,11,12,Normal Termination
+case-6:If an exception raised at stmt-5 and both inner and outer except blocks are not matched
+1,2,3,4,8,11,Abnormal Termination
+case-7: If an exception raised at stmt-7 and corresponding except block matched 1,2,3,.,.,.,8,10,11,12,Normal Termination
+case-8: If an exception raised at stmt-7 and corresponding except block not matched 1,2,3,.,.,.,8,11,Abnormal Termination
+case-9: If an exception raised at stmt-8 and corresponding except block matched 1,2,3,.,.,.,.,10,11,12 Normal Termination
+case-10: If an exception raised at stmt-8 and corresponding except block not matched 1,2,3,.,.,.,.,11,Abnormal Termination
+case-11: If an exception raised at stmt-9 and corresponding except block matched 1,2,3,.,.,.,.,8,10,11,12,Normal Termination
+case-12: If an exception raised at stmt-9 and corresponding except block not matched 1,2,3,.,.,.,.,8,11,Abnormal Termination
+case-13: If an exception raised at stmt-10 then it is always abonormal termination but before abnormal termination finally block(stmt-11) will be executed.
+Case-14: If an exception raised at stmt-11 or stmt-12 then it is always abnormal termination.
+
+Note: If the control entered into try block then compulsary finally block will be executed. If the control not entered into try block then finally block won't be executed.
+
+
+else block with try-except-finally:
+try:
+	risky code
+except: 
+	will be executed if exception inside try
+else:
+	will be executed if there is no exception inside try
+finally:
+will be executed whether exception raised or not raised and handled or not handled.
+
+Various possible combinations of try-except-else-finally:
+Whenever we are writing try block, compulsory we should write except or finally block.i.e without except or finally block we cannot write try block.
+Wheneever we are writing except block, compulsory we should write try block. i.e except without try is always invalid.
+Whenever we are writing finally block, compulsory we should write try block. i.e finally without try is always invalid.
+We can write multiple except blocks for the same try, but we cannot write multiple finally blocks for the same try
+Whenever we are writing else block compulsory except block should be there. i.e without except we cannot write else block.
+In try-except-else-finally order is important
+
+Types of Exceptions
+In Python there are 2 types of exceptions are possible.
+Predefined Exceptions
+User Definded Exceptions
+
+Predefined Exceptions (in-built exceptions)
+The exceptions which are raised automatically by Python virtual machine whenever a particular event occurs, are called pre defined exceptions.
+Eg 1: Whenever we are trying to perform Division by zero, automatically Python will raise ZeroDivisionError.
+print(10/0)
+
+Eg 2: Whenever we are trying to convert input value to int type and if input value is not int value then Python will raise ValueError automatically
+x=int("ten")===>ValueError
+
+User Defined Exceptions (Customized Exceptions or Programatic Exceptions)
+Some time we have to define and raise exceptions explicitly to indicate that something goes wrong , such type of exceptions are called User Defined Exceptions or Customized Exceptions
+Programmer is responsible to define these exceptions. Hence we have to raise explicitly based on our requirement by using "raise" keyword
+
+How to Define and Raise Customized Exceptions
+Every exception in Python is a class that extends Exception class either directly or indirectly.
+raise keyword is best suitable for customized exceptions but not for pre defined exceptions.
+class classname(predefined exception class name): 
+def  init (self,arg):
+self.msg=arg
+
+x = -1
+if x < 0:
+  raise Exception("Sorry, no numbers below zero")
+# Exception: Sorry, no numbers below zero
+
+x = "hello"
+if not type(x) is int:
+  raise TypeError("Only integers are allowed")
+TypeError: Only integers are allowed
+
+x = "hello"
+if type(x)!=int:
+  raise TypeError("Only integers are allowed")
+#TypeError: Only integers are allowed
+
+class TooYoungException(Exception):
+    def __init__(self,arg):
+        self.msg=arg
+age=int(input("Enter Age:"))
+if age>60:
+    raise TooYoungException("Plz wait some more time you will get best match soon!!!")
+#__main__.TooYoungException: Plz wait some more time you will get best match soon!!!
+
+
+
+===========================================================================
+
+
+Python Logging ---------------------
+Logging the Exceptions
+It is highly recommended to store complete application flow and exceptions information to a file. This process is called logging.
+The main advantages of logging are: We can use log files while performing debugging, We can provide statistics like number of requests per day etc
+To implement logging, Python provides one inbuilt module logging
+
+logging levels
+Depending on type of information, logging data is divided according to the following 6 levels in Python.
+1. CRITICAL==>50==>Represents a very serious problem that needs high attention
+2. ERROR===>40===>Represents a serious error
+3. WARNING==>30==>Represents a warning message, some caution needed. It is alert to the programmer
+4. INFO===>20===>Represents a message with some important information
+5. DEBUG===>10==>Represents a message with debugging information
+6. NOTSET==>0==>Rrepresents that the level is not set.
+By default while executing Python program only WARNING and higher level messages will be displayed.
+
+How to implement logging:
+To perform logging, first we required to create a file to store messages and we have to specify which level messages we have to store.
+We can do this by using basicConfig() function of logging module.
+
+logging.basicConfig(filename='log.txt',level=logging.WARNING)
+
+The above line will create a file log.txt and we can store either WARNING level or higher level messages to that file.
+After creating log file, we can write messages to that file by using the following methods. logging.debug(message)
+logging.info(message) 
+logging.warning(message) 
+logging.error(message) 
+logging.critical(message)
+
+Q.Write a Python program to create a log file and write WARNING and higher level messages?
+import logging
+logging.basicConfig(filename='log.txt',level=logging.WARNING)
+print('Demo')
+logging.debug('this debugg message')
+logging.info('this info message')
+logging.warning('this is warning message')
+logging.error('this is error message')
+logging.critical('this is critical message')
+
+#log.txt
+WARNING:root:this is warning message
+ERROR:root:this is error message
+CRITICAL:root:this is critical message
+
+Note
+In the above program only WARNING and higher level messages will be written to log file. If we set level as DEBUG then all messages will be written to log file.
+import logging
+logging.basicConfig(filename='log.txt',level=logging.DEBUG)
+with open('log.txt','w')as filename:
+    print('Demo')
+logging.debug('this debugg message')
+logging.info('this info message')
+logging.warning('this is warning message')
+logging.error('this is error message')
+logging.critical('this is critical message')
+
+#log.txt
+DEBUG:root:this debugg message
+INFO:root:this info message
+WARNING:root:this is warning message
+ERROR:root:this is error message
+CRITICAL:root:this is critical message
+
+We can format log messages to include date and time, ip address of the client etc at advanced level.
+
+How to write Python program exceptions to the log file:
+By using the following function we can write exceptions information to the log file. logging.exception(msg)
+
+Q. Python Program to write exception information to the log file
+import logging
+logging.basicConfig(filename='log.txt',level=logging.INFO)
+logging.info('new request')
+try:
+    x=int(input('Enter first number:'))
+    y=int(input('Enter second number:'))
+    print(x/y)
+except ZeroDivisionError as msg:
+    print("can't devide by zero")
+    logging.exception(msg)
+except ValueError as msg:
+    print('Inter valid int input')
+    logging.exception(msg)
+logging.info('request successfully completed')
+
+Enter first number:10
+Enter second number:2
+5
+Enter first number:10
+Enter second number:0
+can't devide by zero
+
+Enter first number:10
+Enter second number:ten
+Inter valid int input
+
+#log.txt
+INFO:root:new request
+INFO:root:request successfully completed
+INFO:root:new request
+ERROR:root:division by zero
+Traceback (most recent call last):
+  File "C:\Users\parsh\OneDrive\Desktop\test\practice.py", line 7, in <module>
+    print(x/y)
+ZeroDivisionError: division by zero
+INFO:root:request successfully completed
+INFO:root:new request
+ERROR:root:invalid literal for int() with base 10: 'ten'
+Traceback (most recent call last):
+  File "C:\Users\parsh\OneDrive\Desktop\test\practice.py", line 6, in <module>
+    y=int(input('Enter second number:'))
+ValueError: invalid literal for int() with base 10: 'ten'
+INFO:root:request successfully completed
+
+Custom logging:
+import logging
+logging.basicConfig(filename='newlog.txt',format='%(asctime)s:%(name)s:%(levelname)s:%(message)s',level=logging.DEBUG,
+                    datefmt='%d:%m:%y %I:%M:%S %p')
+logger = logging.getLogger('new')
+logger.info("A new request Came")
+try:
+    x=int(input("Enter the number:"))
+    y=int(input("Enter second number:"))
+    print("The result:",x/y)
+except ZeroDivisionError as msg:
+    print("Can not divided with zero")
+    logger.exception(msg)
+except ValueError as msg:
+    print("Please provide int values only")
+    logger.exception(msg)
+logger.info("Request Processing completed...")
+
+
+
+import logging
+logging.basicConfig(filename='newlog.txt',format='%(asctime)s:%(name)s:%(levelname)s:%(message)s',level=logging.DEBUG,
+                    datefmt='%d:%m:%y %I:%M:%S %p')
+logger = logging.getLogger('test')
+logger.critical('critical')
+logger.error('error')
+logger.warning('warning')
+logger.info('info')
+logger.debug('debug')
+
+
+
+
+
+Garbage Collection -----------------------
+1) main objective of garbage collector to destroy useless objects so memory problems is very less in python. If an object does not have any reference 
+  variable then that object eligible for Garbage Collection.
+   By default Gargbage collector is enabled, but we can disable based on our requirement. 
+   gc.enable() gc.isenabled()) #True, gc.disable() gc.isenabled()) #False
+import gc
+print(gc.isenabled())  # True
+gc.disable()
+print(gc.isenabled())  # False
+gc.enable()
+print(gc.isenabled())  # True
+2) Destructors __del__ perform clean up activities. Just before destroying an object Garbage Collector always calls destructor to perform clean up 
+   activities (Resource deallocation activities like close database connection etc). Once destructor execution completed then Garbage Collector automatically
+   destroys that object.
+   How to find the number of references of an object, sys.getrefcount(t1), For every object, Python internally maintains one default reference variable self.
+3) In old languages like C++, programmer is responsible for both creation and destruction of objects. Usually programmer taking very much care while creating 
+   object, but neglecting destruction of useless objects. Because of his neglectance, total memory can be filled with useless  objects which creates memory 
+   problems and total application will be down with Out of memory error.
+   But in Python, We have some assistant which is always running in the background to destroy useless objects. Because this assistant the chance of failing 
+   Python program with memory problems is very less. This assistant is nothing but Garbage Collector. Hence the main objective of Garbage Collector is to 
+  destroy useless objects. If an object does not have any reference variable then that object eligible for Garbage Collection.
+
+
+PYTHON DEBUGGING BY USING ASSERTIONS  -------------
+main purpose of assertions is to perform debugging. 
+main advantage of assert statement over print() statement is after fixing bug we are not required to delete assert statements. 
+Assertions concept can be used to alert programmer to resolve development time errors. Exception Handling can be used to handle runtime errors.
+Types of assert statements: Simple Version: assert conditional_expression, Augmented Version: assert conditional_expression,message
+def square(n):
+    return n**n
+assert square(2)==4,"square of 2 should be 4"
+assert square(3)==9,"square of 3 should be 9"
+print(square(2))
+print(square(3))# AssertionError: square of 3 should be 9
+def square(n):
+    return n*n
+assert square(2)==4,"square of 2 should be 4"
+assert square(3)==9,"square of 3 should be 9"
+print(square(2)) #4
+print(square(3)) #9
+
